@@ -1,0 +1,87 @@
+package com.example.flowershop.presentation.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.flowershop.R
+import com.example.flowershop.screens.BagScreen
+
+@Composable
+fun HomeNavGraph(nestedNavController: NavHostController, externalNavController: NavHostController) {
+
+    NavHost(
+        navController = nestedNavController,
+        startDestination = Graph.MAIN.route
+    ) {
+        mainNavGraph(navController = nestedNavController)
+
+        catalogNavGraph(navController = nestedNavController)
+
+        composable(
+            route = BottomBarNavRoute.Bag.route
+        ) {
+            BagScreen(navController = nestedNavController)
+        }
+
+        profileNavGraph(
+            nestedNavController = nestedNavController,
+            externalNavController = externalNavController
+        )
+    }
+}
+
+//fun NavGraphBuilder.homeNavGraph(navController : NavHostController) {
+//    navigation(
+//        route = Graph.HOME.route,
+//        startDestination = BottomBarNavRoute.Home.route
+//    ) {
+//        mainNavGraph(navController = navController)
+//
+//        catalogNavGraph(navController = navController)
+//
+//        composable(
+//            route = BottomBarNavRoute.Bag.route
+//        ) {
+//            BagScreen(navController = navController)
+//        }
+//
+//        profileNavGraph(navController = navController)
+//    }
+//}
+
+sealed class BottomBarNavRoute(
+    val route: String,
+    val title: String,
+    val selectedIcon: Int,
+    val unselectedIcon: Int
+) {
+    object Home : BottomBarNavRoute(
+        route = Graph.MAIN.route,
+        title = "Главная",
+        selectedIcon = R.drawable.home_selected,
+        unselectedIcon = R.drawable.home
+    )
+
+    object Catalog : BottomBarNavRoute(
+        route = Graph.CATALOG.route,
+        title = "Каталог",
+        selectedIcon = R.drawable.search_selected,
+        unselectedIcon = R.drawable.search
+    )
+
+    object Bag : BottomBarNavRoute(
+        route = "bag",
+        title = "Корзина",
+        selectedIcon = R.drawable.buy_selected,
+        unselectedIcon = R.drawable.buy
+    )
+
+    object Profile : BottomBarNavRoute(
+        route = Graph.PROFILE.route,
+        title = "Профиль",
+        selectedIcon = R.drawable.profile_selected,
+        unselectedIcon = R.drawable.profile
+    )
+}

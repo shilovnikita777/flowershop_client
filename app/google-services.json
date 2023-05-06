@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "22042910998",
+    "firebase_url": "https://flowers-app-9a3aa-default-rtdb.firebaseio.com",
+    "project_id": "flowers-app-9a3aa",
+    "storage_bucket": "flowers-app-9a3aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22042910998:android:68438e186ca08e2dd83037",
+        "android_client_info": {
+          "package_name": "com.example.flowershop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22042910998-h2ej55aptepmbco451esmk5lriura56q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flowershop",
+            "certificate_hash": "a2258917bfb334429a72bc8603723ac3eb5865cc"
+          }
+        },
+        {
+          "client_id": "22042910998-2r9urcmkli4sdksgb17c3cd5t7el668p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDZQtVDZ-RPI33vtB4WkJm0AnUFlPQYwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22042910998-2r9urcmkli4sdksgb17c3cd5t7el668p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22042910998:android:18ff862b27719be0d83037",
+        "android_client_info": {
+          "package_name": "com.example.learningcomposemvvm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22042910998-2r9urcmkli4sdksgb17c3cd5t7el668p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDZQtVDZ-RPI33vtB4WkJm0AnUFlPQYwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22042910998-2r9urcmkli4sdksgb17c3cd5t7el668p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

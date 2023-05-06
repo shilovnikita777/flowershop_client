@@ -1,0 +1,11 @@
+package com.example.flowershop.domain.use_cases.UserUseCases
+
+import com.example.flowershop.domain.model.ProductWithCount
+import com.example.flowershop.domain.repository.UserRepository
+import javax.inject.Inject
+
+class AddAuthorToBagUseCase @Inject constructor(
+    private val repository: UserRepository
+){
+    operator fun invoke(product: ProductWithCount) = repository.addAuthorToBag(product)
+}
