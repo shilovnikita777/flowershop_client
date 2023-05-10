@@ -12,6 +12,7 @@ import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.use_cases.ProductsUseCases.ProductsUseCases
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.presentation.model.ProductWithCountState
+import com.example.flowershop.presentation.model.SearchConditions
 import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_ID
 import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_TYPE
 import com.example.flowershop.util.Constants
@@ -21,6 +22,8 @@ import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_NAME
 import com.example.flowershop.util.Constants.FLOWERS_CATEGORY_ID
 import com.example.flowershop.util.Constants.NO_PRODUCT_CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,7 +39,7 @@ class ConstructorViewModel @Inject constructor(
     productsUseCases = productsUseCases,
     userDatastore = userDatastore,
     savedStateHandle = savedStateHandle
-) {
+){
     private val _flowers = mutableStateOf<Response<List<Flower>>>(Response.Loading)
     val flowers : State<Response<List<Flower>>> = _flowers
 
@@ -101,9 +104,9 @@ class ConstructorViewModel @Inject constructor(
         }
     }
 
-    fun getProducts(categoryId: Int = FLOWERS_CATEGORY_ID) {
-        viewModelScope.launch {
-            productsUseCases.getFlowersUseCase().map { response ->
+    fun getProducts(searchConditions: SearchConditions = SearchConditions()) : Job {
+        return viewModelScope.launch {
+            productsUseCases.getFlowersUseCase(searchConditions).map { response ->
                 when(response) {
                     is Response.Loading -> {
                         response
@@ -125,6 +128,13 @@ class ConstructorViewModel @Inject constructor(
             }.collect {
                 _flowers.value = it
             }
+        }
+    }
+
+    fun performSearchWithDelay(searchConditions: SearchConditions) : Job {
+        return viewModelScope.launch {
+            delay(1000)
+            getProducts(searchConditions)
         }
     }
 

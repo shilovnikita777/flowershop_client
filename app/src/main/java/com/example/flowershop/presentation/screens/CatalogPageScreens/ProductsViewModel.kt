@@ -14,6 +14,8 @@ import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.presentation.screens.MainPageScreens.SortAndFilterViewModel
 import com.example.flowershop.util.Constants.NO_CATEGORY_CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,61 +46,8 @@ class ProductsViewModel @Inject constructor(
         isProductsLoaded = state
     }
 
-    fun getProducts() {
-        viewModelScope.launch {
-//            if (categoryId == NO_CATEGORY_CONSTANT) {
-//                productsUseCases.getAllProductsUseCase().map { response ->
-//                    when(response) {
-//                        is Response.Error -> {
-//                            response
-//                        }
-//                        is Response.Loading -> {
-//                            response
-//                        }
-//                        is Response.Success -> {
-//                            val list = mutableListOf<Triple<Product, MutableState<Response<Boolean>>, MutableState<Response<Boolean>>>>()
-//                            response.data.forEach {
-//                                list.add(
-//                                    Triple(
-//                                        first = it,
-//                                        second = mutableStateOf(Response.Success(false)),
-//                                        third = mutableStateOf(Response.Success(false))
-//                                    )
-//                                )
-//                            }
-//                            Response.Success(list)
-//                        }
-//                    }
-//                }.collect {
-//                    _currentProducts.value = it
-//                }
-//            } else {
-//                productsUseCases.getProductsByCategoryUseCase(categoryId).map { response ->
-//                    when(response) {
-//                        is Response.Error -> {
-//                            response
-//                        }
-//                        is Response.Loading -> {
-//                            response
-//                        }
-//                        is Response.Success -> {
-//                            val list = mutableListOf<Triple<Product, MutableState<Response<Boolean>>, MutableState<Response<Boolean>>>>()
-//                            response.data.forEach {
-//                                list.add(
-//                                    Triple(
-//                                        first = it,
-//                                        second = mutableStateOf(Response.Success(false)),
-//                                        third = mutableStateOf(Response.Success(false))
-//                                    )
-//                                )
-//                            }
-//                            Response.Success(list)
-//                        }
-//                    }
-//                }.collect {
-//                    _currentProducts.value = it
-//                }
-//            }
+    fun getProducts() : Job {
+        return viewModelScope.launch {
             productsUseCases.getProductsUseCase(_searchConditions.value).map { response ->
                 when (response) {
                     is Response.Error -> {
@@ -125,6 +74,13 @@ class ProductsViewModel @Inject constructor(
             }.collect {
                 _currentProducts.value = it
             }
+        }
+    }
+
+    fun performSearchWithDelay() : Job {
+        return viewModelScope.launch {
+            delay(1000)
+            getProducts()
         }
     }
 }

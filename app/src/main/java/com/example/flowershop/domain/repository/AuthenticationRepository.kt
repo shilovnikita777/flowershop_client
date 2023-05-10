@@ -13,4 +13,6 @@ interface AuthenticationRepository {
     fun signIn(email: String, password: String) : Flow<Response<LoginResponse>>
 
     fun signUp(email: String, username: String,password: String) : Flow<Response<RegisterResponse>>
+
+    fun logout(token : String) : Flow<Response<Boolean>>
 }

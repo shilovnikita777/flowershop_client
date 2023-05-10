@@ -206,4 +206,8 @@ class UserRepositoryImpl @Inject constructor(
         )
         userApiService.updateAuthorInBag(updateProductInBagData)
     }
+
+    override fun deleteAccount() = apiRequestFlow {
+        userApiService.deleteAccount()
+    }
 }

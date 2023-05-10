@@ -10,10 +10,7 @@ import com.example.flowershop.data.repository.test.TestUserRepositoryImpl
 import com.example.flowershop.domain.repository.AuthenticationRepository
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.domain.repository.UserRepository
-import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
-import com.example.flowershop.domain.use_cases.AuthenticationUseCases.IsUserAuthenticatedUseCase
-import com.example.flowershop.domain.use_cases.AuthenticationUseCases.SignInUseCase
-import com.example.flowershop.domain.use_cases.AuthenticationUseCases.SignUpUseCase
+import com.example.flowershop.domain.use_cases.AuthenticationUseCases.*
 import com.example.flowershop.domain.use_cases.ProductsUseCases.*
 import com.example.flowershop.domain.use_cases.UserUseCases.*
 import com.google.firebase.auth.FirebaseAuth
@@ -46,7 +43,8 @@ object FlowerAppModule {
     ) = AuthenticationUseCases(
         signInUseCase = SignInUseCase(repository),
         signUpUseCase = SignUpUseCase(repository),
-        isUserAuthenticatedUseCase = IsUserAuthenticatedUseCase(repository)
+        isUserAuthenticatedUseCase = IsUserAuthenticatedUseCase(repository),
+        logoutUseCase = LogoutUseCase(repository)
     )
 
     @Singleton
@@ -104,7 +102,8 @@ object FlowerAppModule {
         addAuthorToBagUseCase = AddAuthorToBagUseCase(repository),
         getAuthorBouquetByIdUseCase = GetAuthorBouquetByIdUseCase(repository),
         isAuthorBouquetInBagUseCase = IsAuthorBouquetInBagUseCase(repository),
-        updateAuthorBouquetInBagUseCase = UpdateAuthorBouquetInBagUseCase(repository)
+        updateAuthorBouquetInBagUseCase = UpdateAuthorBouquetInBagUseCase(repository),
+        deleteAccountUseCase = DeleteAccountUseCase(repository)
     )
 
     @Singleton

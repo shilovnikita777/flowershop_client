@@ -23,4 +23,9 @@ interface AuthApiService {
     suspend fun isAuth(
         @Header("Authorization") token : String
     ) : Response<isAuthResponse>
+
+    @GET("auth/logout")
+    suspend fun logout(
+        @Header("Authorization") token : String
+    ) : Response<Boolean>
 }

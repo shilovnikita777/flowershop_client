@@ -1,6 +1,5 @@
 package com.example.flowershop.data.repository.test
 
-import android.util.Log
 import com.example.flowershop.data.TestData
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.ProductsRepository
@@ -213,7 +212,7 @@ class TestProductsRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun getFlowers(): Flow<Response<List<Flower>>> {
+    override fun getFlowers(searchConditions: SearchConditions): Flow<Response<List<Flower>>> {
         TODO("Not yet implemented")
     }
 

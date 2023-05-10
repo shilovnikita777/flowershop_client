@@ -6,28 +6,42 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flowershop.data.TokenManager
 import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.model.User
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
+import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore
+    private val userDatastore: UserDatastore,
+    private val authUseCases : AuthenticationUseCases,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _userMainInfoResponse = mutableStateOf<Response<UserMainInfoResponse>>(Response.Loading)
     val userMainInfoResponse : State<Response<UserMainInfoResponse>> = _userMainInfoResponse
 
-    private var _userId = -1
+    private val _logoutResponse = mutableStateOf<Response<Boolean>?>(null)
+    val logoutResponse : State<Response<Boolean>?> = _logoutResponse
 
-    var isDialogShown by mutableStateOf(false)
+    private val _deleteAccResponse = mutableStateOf<Response<Boolean>?>(null)
+    val deleteAccResponse : State<Response<Boolean>?> = _deleteAccResponse
+
+    private var _userId = NO_USER_CONSTANT
+
+    var isExitDialogShown by mutableStateOf(false)
+        private set
+
+    var isDeleteDialogShown by mutableStateOf(false)
         private set
 
     init {
@@ -51,17 +65,43 @@ class ProfileViewModel @Inject constructor(
 
     fun logout(onSuccess: () -> Unit) {
         viewModelScope.launch {
-            //userDatastore.deleteUserId()
-            //FirebaseAuth.getInstance().signOut()
-            onSuccess()
+            tokenManager.getToken().collect {
+                authUseCases.logoutUseCase(it).collect {
+                    _logoutResponse.value = it
+                    onSuccess()
+                    if (it is Response.Success && it.data) {
+
+                    }
+                }
+            }
+        }
+    }
+
+    fun deleteAccount(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            userUseCases.deleteAccountUseCase().collect {
+                _deleteAccResponse.value = it
+                if (it is Response.Success && it.data) {
+                    tokenManager.deleteToken()
+                    onSuccess()
+                }
+            }
         }
     }
 
     fun onExitClicked() {
-        isDialogShown = true
+        isExitDialogShown = true
     }
 
-    fun onDismissDialog() {
-        isDialogShown = false
+    fun onDeleteClicked() {
+        isDeleteDialogShown = true
+    }
+
+    fun onDismissExit() {
+        isExitDialogShown = false
+    }
+
+    fun onDismissDelete() {
+        isDeleteDialogShown = false
     }
 }

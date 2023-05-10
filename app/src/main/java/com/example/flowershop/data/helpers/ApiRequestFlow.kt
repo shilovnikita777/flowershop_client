@@ -13,7 +13,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 fun<T> apiRequestFlow(call: suspend () -> retrofit2.Response<T>) : Flow<Response<T>> = flow {
     emit(Response.Loading)
 
-    withTimeoutOrNull(20000L) {
+    withTimeoutOrNull(10000L) {
         val response = call()
         try {
             Log.d("xd3","raw response : ${response}")
@@ -33,5 +33,5 @@ fun<T> apiRequestFlow(call: suspend () -> retrofit2.Response<T>) : Flow<Response
         } catch (e: Exception) {
             emit(Response.Error(e.localizedMessage ?: e.toString()))
         }
-    } ?: emit(Response.Error("Таймаут"))
+    } ?: emit(Response.Error("Нет интернет соединения"))
 }.flowOn(Dispatchers.IO)

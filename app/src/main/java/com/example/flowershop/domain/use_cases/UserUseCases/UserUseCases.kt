@@ -17,5 +17,6 @@ data class UserUseCases (
     val addAuthorToBagUseCase: AddAuthorToBagUseCase,
     val getAuthorBouquetByIdUseCase: GetAuthorBouquetByIdUseCase,
     val isAuthorBouquetInBagUseCase: IsAuthorBouquetInBagUseCase,
-    val updateAuthorBouquetInBagUseCase: UpdateAuthorBouquetInBagUseCase
+    val updateAuthorBouquetInBagUseCase: UpdateAuthorBouquetInBagUseCase,
+    val deleteAccountUseCase: DeleteAccountUseCase
 )

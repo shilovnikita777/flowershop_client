@@ -92,7 +92,7 @@ fun SplashScreen(navController: NavHostController) {
         is Response.Error -> {
             LaunchedEffect(key1 = true) {
                 Log.d("xd3", "auth error")
-                Toast.makeText(context, "Ошибка авторизации", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, isAuthReponse.message, Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
                 navController.navigate(Graph.AUTHENTICATION.route)
             }

@@ -1,16 +1,9 @@
 package com.example.flowershop.data.repository
 
-import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.data.helpers.apiRequestFlow
-import com.example.flowershop.data.model.Response.BouquetResponse
-import com.example.flowershop.data.model.Response.FlowerResponse
 import com.example.flowershop.data.network.ProductsApiService
-import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.presentation.model.SearchConditions
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ProductsRepositoryImpl @Inject constructor(
@@ -52,8 +45,14 @@ class ProductsRepositoryImpl @Inject constructor(
         productsApiService.getTables()
     }
 
-    override fun getFlowers() = apiRequestFlow {
-        productsApiService.getFlowers()
+    override fun getFlowers(searchConditions: SearchConditions) = apiRequestFlow {
+        productsApiService.getFlowers(
+            minPrice = searchConditions.minPrice,
+            maxPrice = searchConditions.maxPrice,
+            sorts = searchConditions.include,
+            search = searchConditions.search,
+            sort = searchConditions.sortCriteria?.value
+        )
     }
 
     override fun getProducts(searchConditions: SearchConditions) = apiRequestFlow {

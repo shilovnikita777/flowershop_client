@@ -25,6 +25,10 @@ class TestUserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun deleteAccount(): Flow<Response<Boolean>> {
+        TODO("Not yet implemented")
+    }
+
     override fun updateAuthorBouquetInBag(
         productWithCount: ProductWithCount,
         userId: Int

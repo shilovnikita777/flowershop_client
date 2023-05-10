@@ -28,7 +28,13 @@ interface ProductsApiService {
     ) : Response<List<Product>>
 
     @GET("products/flowers")
-    suspend fun getFlowers() : Response<List<Flower>>
+    suspend fun getFlowers(
+        @Query("minprice") minPrice : Int?,
+        @Query("maxprice") maxPrice : Int?,
+        @Query("sorts") sorts : List<String>?,
+        @Query("search") search : String?,
+        @Query("sort") sort : String?,
+    ) : Response<List<Flower>>
 
     @GET("products/decorations")
     suspend fun getDecorations() : Response<List<Decoration>>

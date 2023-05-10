@@ -43,4 +43,6 @@ interface UserRepository {
     fun updateAuthorBouquetInBag(productWithCount: ProductWithCount, userId: Int) : Flow<Response<Boolean>>
 
     fun getAuthorBouquetById(id : Int) : Flow<Response<ProductWithCount>>
+
+    fun deleteAccount() : Flow<Response<Boolean>>
 }

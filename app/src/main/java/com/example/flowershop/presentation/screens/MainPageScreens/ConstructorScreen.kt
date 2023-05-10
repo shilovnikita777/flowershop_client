@@ -34,15 +34,19 @@ import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.Flower
 import com.example.flowershop.presentation.model.ProductEnum
 import com.example.flowershop.presentation.model.ProductWithCountState
+import com.example.flowershop.presentation.screens.CatalogPageScreens.FilterDialog
 import com.example.flowershop.presentation.screens.CatalogPageScreens.Search
 import com.example.flowershop.presentation.screens.CatalogPageScreens.SortAndFilter
+import com.example.flowershop.presentation.screens.CatalogPageScreens.SortDialog
 import com.example.flowershop.presentation.screens.MainPageScreens.ConstructorViewModel
 import com.example.flowershop.presentation.screens.MainPageScreens.ProductBaseViewModel
+import com.example.flowershop.presentation.screens.MainPageScreens.SortAndFilterViewModel
 import com.example.flowershop.presentation.screens.UserProductViewModel
 import com.example.flowershop.presentation.screens.common.Separator
 import com.example.flowershop.presentation.screens.common.h2
 import com.example.flowershop.presentation.screens.common.noRippleClickable
 import com.example.flowershop.util.Constants.NO_PRODUCT_CONSTANT
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -50,6 +54,7 @@ import kotlinx.coroutines.launch
 fun ConstructorScreen(navController: NavHostController, productId: Int) {
     val constructorViewModel = hiltViewModel<ConstructorViewModel>()
     val userProductViewModel = hiltViewModel<UserProductViewModel>()
+    val sortAndFilterViewModel = hiltViewModel<SortAndFilterViewModel>()
 
     val productResponse = constructorViewModel.currentProductResponse.value
 
@@ -70,7 +75,6 @@ fun ConstructorScreen(navController: NavHostController, productId: Int) {
     val coroutineScope = rememberCoroutineScope()
 
     if (constructorViewModel.productId == NO_PRODUCT_CONSTANT || productResponse is Response.Success) {
-
         if (productResponse is Response.Success) {
             //constructorViewModel.changeProductInBagState(Response.Success(true))
             val isProductInBagResponse = constructorViewModel.isProductInBag.value
@@ -89,7 +93,11 @@ fun ConstructorScreen(navController: NavHostController, productId: Int) {
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
             sheetContent = {
-                BottomSheetContent(constructorViewModel)
+                BottomSheetContent(
+                    constructorViewModel,
+                    sortAndFilterViewModel,
+                    sortAndFilterViewModel.searchJob
+                )
             },
             sheetPeekHeight = 0.dp,
             sheetShape = RoundedCornerShape(15.dp,15.dp,0.dp,0.dp)
@@ -472,7 +480,9 @@ fun AddButton(onClick: () -> Unit) {
 
 @Composable
 fun BottomSheetContent(
-    viewModel: ConstructorViewModel
+    viewModel: ConstructorViewModel,
+    sortAndFilterViewModel: SortAndFilterViewModel,
+    job : MutableState<Job?>
 ) {
     val flowersResponse = viewModel.flowers.value
     Column(
@@ -480,6 +490,19 @@ fun BottomSheetContent(
             .fillMaxSize()
             .padding(top = 40.dp)
     ) {
+        Search(
+            search = sortAndFilterViewModel.searchConditions.value.search ?: "",
+            onValueChange = {
+                sortAndFilterViewModel.onSearchInput(it)
+                job.value?.cancel()
+                job.value = viewModel.performSearchWithDelay(sortAndFilterViewModel.searchConditions.value)
+            },
+            onSearch = {
+                job.value?.cancel()
+                job.value = viewModel.getProducts(sortAndFilterViewModel.searchConditions.value)
+            }
+        )
+
         when (flowersResponse) {
             is Response.Loading -> {
                 CircularProgressIndicator(
@@ -497,28 +520,50 @@ fun BottomSheetContent(
                 )
             }
             is Response.Success -> {
-                Search(
-                    search = viewModel.search,
-                    onValueChange = {
-                        viewModel.onSearchInput(it)
-                    },
-                    onSearch = {
-
-                    }
-                )
                 SortAndFilter({
-
+                    sortAndFilterViewModel.onSortClicked()
                 }, {
-
+                    sortAndFilterViewModel.onFilterClicked()
                 })
-
-                Flowers(
-                    products = flowersResponse.data,
-                    viewModel = viewModel
-                )
+                if (flowersResponse.data.isEmpty()) {
+                    Text(
+                        text = "Продуктов, подходящих под критерии не найдено",
+                        style = MaterialTheme.typography.subtitle1.copy(
+                            fontSize = 20.sp
+                        ),
+                        color = MaterialTheme.colors.onBackground,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp, vertical = 16.dp)
+                    )
+                } else {
+                    Flowers(
+                        products = flowersResponse.data,
+                        viewModel = viewModel
+                    )
+                }
             }
         }
+        if (sortAndFilterViewModel.isFilterDialogShown) {
+            FilterDialog(
+                viewModel = sortAndFilterViewModel,
+                getProducts = {
+                    job.value?.cancel()
+                    job.value = viewModel.getProducts(sortAndFilterViewModel.searchConditions.value)
+                },
+                areBouquetsAvailable = false
+            )
+        }
 
+        if (sortAndFilterViewModel.isSortDialogShown) {
+            SortDialog(
+                viewModel = sortAndFilterViewModel,
+                getProducts = {
+                    job.value?.cancel()
+                    job.value = viewModel.getProducts(sortAndFilterViewModel.searchConditions.value)
+                }
+            )
+        }
     }
 }
 

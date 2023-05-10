@@ -6,6 +6,7 @@ import com.example.flowershop.data.model.Request.LoginRequest
 import com.example.flowershop.data.model.Request.RegisterRequest
 import com.example.flowershop.data.network.AuthApiService
 import com.example.flowershop.domain.repository.AuthenticationRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -31,5 +32,10 @@ class AuthRepositoryImpl @Inject constructor(
             password = password
         )
         authApiService.register(registerData)
+    }
+
+    override fun logout(token : String) = apiRequestFlow {
+        val headerToken = "Bearer $token"
+        authApiService.logout(headerToken)
     }
 }

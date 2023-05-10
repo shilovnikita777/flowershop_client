@@ -2,16 +2,15 @@ package com.example.flowershop.presentation.screens.MainPageScreens
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.flowershop.presentation.model.BouquetSize
 import com.example.flowershop.presentation.model.SearchConditions
 import com.example.flowershop.presentation.model.ListItem
 import com.example.flowershop.presentation.model.SortCriteria
 import com.example.flowershop.util.Constants
 import com.example.flowershop.util.Constants.NO_CATEGORY_CONSTANT
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Job
 
-abstract class SortAndFilterViewModel (
+open class SortAndFilterViewModel (
 ) : ViewModel() {
     var isFilterDialogShown by mutableStateOf(false)
         private set
@@ -32,19 +31,29 @@ abstract class SortAndFilterViewModel (
     var sortCriteria = listOf("По возрастанию цены", "По убыванию цены", "Сначала новые")
         private set
 
+    var savedSearchConditions : SearchConditions? = null
+
     protected val _searchConditions = mutableStateOf(SearchConditions())
     val searchConditions : State<SearchConditions> = _searchConditions
 
+    var searchJob = mutableStateOf<Job?>(null)
+
     fun onFilterClicked() {
         isFilterDialogShown = true
+        savedSearchConditions = _searchConditions.value
     }
 
     fun onFilterDismiss() {
         isFilterDialogShown = false
     }
 
+    fun haveConditionsChanged() : Boolean {
+        return savedSearchConditions != _searchConditions.value
+    }
+
     fun onSortClicked() {
         isSortDialogShown = true
+        savedSearchConditions = _searchConditions.value
     }
 
     fun onSortDismiss() {
@@ -180,5 +189,23 @@ abstract class SortAndFilterViewModel (
                 return false
             }
         }
+    }
+
+    fun clearFilters() {
+        _searchConditions.value = _searchConditions.value.copy(
+            minPrice = null,
+            maxPrice = null,
+            include = null,
+            bouquetSize = null
+        )
+        sorts.value = sorts.value.map {
+            it.copy(isSelected = false)
+        }
+    }
+
+    fun clearSortCriteria() {
+        _searchConditions.value = _searchConditions.value.copy(
+            sortCriteria = null
+        )
     }
 }

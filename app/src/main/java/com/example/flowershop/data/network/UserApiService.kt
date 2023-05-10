@@ -74,4 +74,7 @@ interface UserApiService {
 
     @GET("user/author/{id}")
     suspend fun getAuthorBouquetById(@Path("id") authorBouquetId : Int) : Response<ProductWithCount>
+
+    @POST("user/deleteacc")
+    suspend fun deleteAccount() : Response<Boolean>
 }

@@ -289,21 +289,38 @@ fun ProfileScreen(
                 nestedNavController.navigate(route = ProfileNavRoute.ProfilePolicy.route)
             }
             InfoRow(title = "Удалить аккаунт") {
-
+                viewModel.onDeleteClicked()
             }
 
         }
     }
 
-    if (viewModel.isDialogShown) {
+    if (viewModel.isExitDialogShown) {
         ExitDialog(
             onDismiss = {
-                viewModel.onDismissDialog()
+                viewModel.onDismissExit()
             },
             onConfirm = {
                 viewModel.logout {
-                    viewModel.onDismissDialog()
-                    //nestedNavController.popBackStack()
+                    viewModel.onDismissExit()
+                    externalNavController.navigate(route = Graph.AUTHENTICATION.route) {
+                        popUpTo(Graph.HOME.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    if (viewModel.isDeleteDialogShown) {
+        DeleteAccDialog(
+            onDismiss = {
+                viewModel.onDismissDelete()
+            },
+            onConfirm = {
+                viewModel.deleteAccount {
+                    viewModel.onDismissDelete()
                     externalNavController.navigate(route = Graph.AUTHENTICATION.route) {
                         popUpTo(Graph.HOME.route) {
                             inclusive = true
@@ -467,6 +484,94 @@ fun ExitDialog(
                     text = "Вы уверены что хотите выйти?",
                     style = MaterialTheme.typography.subtitle1,
                     color = MaterialTheme.colors.onBackground
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.exit),
+                    contentDescription = "exit",
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .size(60.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(25.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.onError
+                        ),
+                        shape = RoundedCornerShape(6.dp),
+                        onClick = {
+                            onDismiss()
+                        }
+                    ) {
+                        Text(
+                            text = "Нет",
+                            style = MaterialTheme.typography.h3.copy(fontSize = 10.sp),
+                            color = MaterialTheme.colors.background
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .weight(1f)
+                    )
+                    Button(
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(25.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primaryVariant
+                        ),
+                        shape = RoundedCornerShape(6.dp),
+                        onClick = {
+                            onConfirm()
+                        }
+                    ) {
+                        Text(
+                            text = "Да",
+                            style = MaterialTheme.typography.h3.copy(fontSize = 10.sp),
+                            color = MaterialTheme.colors.background
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun DeleteAccDialog(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = { onDismiss() },
+        properties = DialogProperties(
+            usePlatformDefaultWidth = true
+        )
+    ) {
+        Card(
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .fillMaxWidth(0.95f)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 24.dp)
+            ) {
+                Text(
+                    text = "Вы уверены что хотите удалить аккаунт без возможности восстановления?",
+                    style = MaterialTheme.typography.subtitle1,
+                    color = MaterialTheme.colors.onBackground,
+                    textAlign = TextAlign.Center
                 )
                 Image(
                     painter = painterResource(id = R.drawable.exit),
