@@ -210,4 +210,18 @@ class UserRepositoryImpl @Inject constructor(
     override fun deleteAccount() = apiRequestFlow {
         userApiService.deleteAccount()
     }
+
+    override fun makeOrder(orderData: User.Order) = apiRequestFlow {
+        val order = OrderRequest(
+            date = orderData.date,
+            phone = orderData.phone,
+            address = orderData.address,
+            fullname = orderData.fullname
+        )
+        userApiService.makeOrder(order)
+    }
+
+    override fun getOrderHistory(): Flow<Response<List<User.Order>>> = apiRequestFlow {
+        userApiService.getOrderHistory()
+    }
 }

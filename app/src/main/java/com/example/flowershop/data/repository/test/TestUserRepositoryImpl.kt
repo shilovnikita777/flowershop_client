@@ -29,6 +29,14 @@ class TestUserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun makeOrder(orderData: User.Order): Flow<Response<Boolean>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getOrderHistory(): Flow<Response<List<User.Order>>> {
+        TODO("Not yet implemented")
+    }
+
     override fun updateAuthorBouquetInBag(
         productWithCount: ProductWithCount,
         userId: Int

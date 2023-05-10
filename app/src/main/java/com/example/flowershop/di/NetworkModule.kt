@@ -18,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.time.LocalDate
 import javax.inject.Singleton
 
 @Module
@@ -57,6 +58,7 @@ object NetworkModule {
             .registerTypeAdapter(ProductWithCount::class.java, ProductWithCountDeserializer())
             .registerTypeAdapter(Image::class.java, ImageDeserializer())
             .registerTypeAdapter(Flower::class.java, FlowerSerializer())
+            .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter().nullSafe())
             //.registerTypeAdapter(Product::class.java, ProductTypeAdapter())
             //.registerTypeAdapter(Product::class.java, ProductDeserializer())
             .create()

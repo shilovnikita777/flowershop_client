@@ -17,6 +17,7 @@ val CustomRed = Color(0xFFFF6868)
 val CustomLightRed = Color(0xFFCF0808)
 val CustomPlaceholder = Color(0xFFE4E4E4)
 
+val CustomUltraLightGreen = Color(0xFFABFF9D)
 val CustomGreen = Color(0xFF018E42)
 
 val CustomCyan = Color(0xFF01868E)

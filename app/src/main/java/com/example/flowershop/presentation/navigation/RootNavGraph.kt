@@ -47,6 +47,7 @@ sealed class Graph(
     object MAIN: Graph("main_graph")
     object CATALOG: Graph("catalog_graph")
     object PROFILE: Graph("profile_graph")
+    object BAG: Graph("bag_graph")
     object SCAFFOLD: Graph("scaffold_graph")
 }
 //object Graph {

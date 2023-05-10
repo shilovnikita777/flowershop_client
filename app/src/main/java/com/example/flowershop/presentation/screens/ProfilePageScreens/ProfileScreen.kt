@@ -247,7 +247,11 @@ fun ProfileScreen(
                     UserInfoCard(
                         image = R.drawable.car,
                         name = "История заказов",
-                        color = Color(0xFFA6AFFF)
+                        color = Color(0xFFA6AFFF),
+                        modifier = Modifier
+                            .noRippleClickable {
+                                nestedNavController.navigate(ProfileNavRoute.ProfileHistory.route)
+                            }
                     )
                 }
                 item{

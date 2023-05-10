@@ -4,6 +4,7 @@ import com.example.flowershop.data.model.Request.*
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.ProductWithCount
+import com.example.flowershop.domain.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -77,4 +78,12 @@ interface UserApiService {
 
     @POST("user/deleteacc")
     suspend fun deleteAccount() : Response<Boolean>
+
+    @POST("user/makeorder")
+    suspend fun makeOrder(
+        @Body orderData : OrderRequest
+    ) : Response<Boolean>
+
+    @GET("user/orders")
+    suspend fun getOrderHistory() : Response<List<User.Order>>
 }

@@ -37,6 +37,7 @@ import androidx.core.text.isDigitsOnly
 import com.example.flowershop.domain.model.Bouquet
 import com.example.flowershop.domain.model.FlowersWithDecoration
 import com.example.flowershop.domain.model.ProductInBag
+import com.example.flowershop.presentation.navigation.BagNavRoute
 import com.example.flowershop.presentation.navigation.MainNavRoute
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_NAME
 
@@ -320,7 +321,7 @@ fun ProductsInBag(
                 ),
                 shape = RoundedCornerShape(56.dp),
                 onClick = {
-
+                    navController.navigate(route = BagNavRoute.BagOrderInfo.route)
                 }
             ) {
                 Text(

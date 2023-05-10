@@ -1,5 +1,6 @@
 package com.example.flowershop.domain.model
 
+import java.time.LocalDate
 import java.util.*
 
 class User(
@@ -28,10 +29,12 @@ class User(
     }
 
     class Order(
-        val products: MutableList<Product>,
-        val date: Date,
+        val id: Int = -1,
+        val products: MutableList<ProductInBag>? = null,
+        val date: LocalDate,
         val phone: String,
-        val address: String
+        val address: String,
+        val fullname: String
     )
 
     class OrderHistory(

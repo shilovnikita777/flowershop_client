@@ -45,4 +45,8 @@ interface UserRepository {
     fun getAuthorBouquetById(id : Int) : Flow<Response<ProductWithCount>>
 
     fun deleteAccount() : Flow<Response<Boolean>>
+
+    fun makeOrder(orderData: User.Order) : Flow<Response<Boolean>>
+
+    fun getOrderHistory() : Flow<Response<List<User.Order>>>
 }

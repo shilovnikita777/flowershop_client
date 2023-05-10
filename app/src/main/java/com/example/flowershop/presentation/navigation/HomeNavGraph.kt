@@ -19,11 +19,7 @@ fun HomeNavGraph(nestedNavController: NavHostController, externalNavController: 
 
         catalogNavGraph(navController = nestedNavController)
 
-        composable(
-            route = BottomBarNavRoute.Bag.route
-        ) {
-            BagScreen(navController = nestedNavController)
-        }
+        bagNavGraph(navController = nestedNavController)
 
         profileNavGraph(
             nestedNavController = nestedNavController,
@@ -72,7 +68,7 @@ sealed class BottomBarNavRoute(
     )
 
     object Bag : BottomBarNavRoute(
-        route = "bag",
+        route = Graph.BAG.route,
         title = "Корзина",
         selectedIcon = R.drawable.buy_selected,
         unselectedIcon = R.drawable.buy

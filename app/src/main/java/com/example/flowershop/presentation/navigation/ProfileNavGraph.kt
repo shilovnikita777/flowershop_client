@@ -29,6 +29,12 @@ fun NavGraphBuilder.profileNavGraph(
         ) {
             EditProfileScreen(nestedNavController)
         }
+
+        composable(
+            route = ProfileNavRoute.ProfileHistory.route
+        ) {
+            OrderHistoryScreen(nestedNavController)
+        }
         
         composable(
             route = ProfileNavRoute.ProfileFavourite.route
@@ -68,6 +74,8 @@ sealed class ProfileNavRoute(
     object ProfileMain : ProfileNavRoute(route = "profile_main")
 
     object ProfileEdit : ProfileNavRoute(route = "profile_edit")
+
+    object ProfileHistory : ProfileNavRoute(route = "profile_history")
 
     object ProfileFavourite : ProfileNavRoute(route = "profile_favourite")
 

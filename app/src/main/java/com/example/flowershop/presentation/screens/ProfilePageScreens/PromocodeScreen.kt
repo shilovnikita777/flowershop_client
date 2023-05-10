@@ -30,7 +30,6 @@ import com.example.flowershop.data.helpers.Response
 
 @Composable
 fun PromocodeScreen() {
-
     val viewModel = hiltViewModel<PromocodesViewModel>()
 
     val promocodes = viewModel.promocodes.value
