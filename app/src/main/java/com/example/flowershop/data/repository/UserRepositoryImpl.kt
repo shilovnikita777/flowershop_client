@@ -224,4 +224,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun getOrderHistory(): Flow<Response<List<User.Order>>> = apiRequestFlow {
         userApiService.getOrderHistory()
     }
+
+    override fun getOrderById(id: Int) = apiRequestFlow {
+        userApiService.getOrderById(id)
+    }
 }

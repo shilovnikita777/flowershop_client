@@ -6,6 +6,7 @@ import androidx.navigation.compose.navigation
 import com.example.flowershop.presentation.screens.ProfilePageScreens.*
 import com.example.flowershop.screens.FavouriteScreen
 import com.example.flowershop.screens.ProfileScreen
+import com.example.flowershop.util.Constants.NO_ORDER_CONSTANT
 
 fun NavGraphBuilder.profileNavGraph(
     nestedNavController : NavHostController,
@@ -34,6 +35,19 @@ fun NavGraphBuilder.profileNavGraph(
             route = ProfileNavRoute.ProfileHistory.route
         ) {
             OrderHistoryScreen(nestedNavController)
+        }
+
+        composable(
+            route = ProfileNavRoute.ProfileOrder.route,
+            arguments = listOf(
+                navArgument(ARGUMENT_ORDER_ID) {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            OrderHistoryItemScreen(
+                orderId = it.arguments?.getInt(ARGUMENT_ORDER_ID) ?: NO_ORDER_CONSTANT
+            )
         }
         
         composable(
@@ -86,4 +100,10 @@ sealed class ProfileNavRoute(
     object ProfilePolicy : ProfileNavRoute(route = "profile_policy")
 
     object ProfileContacts : ProfileNavRoute(route = "profile_contacts")
+
+    object ProfileOrder : ProfileNavRoute(route = "profile_order/{$ARGUMENT_ORDER_ID}") {
+        fun passId(id : Int): String = "profile_order/$id"
+    }
 }
+
+const val ARGUMENT_ORDER_ID = "id"

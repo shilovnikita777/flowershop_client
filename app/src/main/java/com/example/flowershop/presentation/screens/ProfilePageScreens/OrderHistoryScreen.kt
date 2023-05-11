@@ -31,6 +31,7 @@ import com.example.flowershop.R
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.User
 import com.example.flowershop.presentation.model.PromocodeUI
+import com.example.flowershop.presentation.navigation.ProfileNavRoute
 import com.example.flowershop.presentation.screens.common.noRippleClickable
 import com.example.flowershop.ui.theme.CustomGreen
 import com.example.flowershop.ui.theme.CustomUltraLightGreen
@@ -89,11 +90,13 @@ fun OrderHistoryScreen(navController: NavHostController) {
                         contentPadding = PaddingValues(all = 24.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(orders.data) {
+                        items(orders.data.reversed()) {
                             OrderHistoryCard(
                                 order = it,
                                 onClick = {
-
+                                    navController.navigate(route = ProfileNavRoute.ProfileOrder.passId(
+                                        id = it.id
+                                    ))
                                 }
                             )
                         }
@@ -107,7 +110,7 @@ fun OrderHistoryScreen(navController: NavHostController) {
 @Composable
 fun OrderHistoryCard(
     order: User.Order,
-    onClick : (String) -> Unit
+    onClick : () -> Unit
 ) {
     Card(
         elevation = 2.dp,
@@ -117,7 +120,7 @@ fun OrderHistoryCard(
             .fillMaxWidth()
             .height(125.dp)
             .noRippleClickable {
-
+                onClick()
             }
     ) {
         Row(

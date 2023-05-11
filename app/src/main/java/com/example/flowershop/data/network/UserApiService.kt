@@ -86,4 +86,7 @@ interface UserApiService {
 
     @GET("user/orders")
     suspend fun getOrderHistory() : Response<List<User.Order>>
+
+    @GET("user/orders/{id}")
+    suspend fun getOrderById(@Path("id") id : Int) : Response<User.Order>
 }

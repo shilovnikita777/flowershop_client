@@ -20,5 +20,6 @@ data class UserUseCases (
     val updateAuthorBouquetInBagUseCase: UpdateAuthorBouquetInBagUseCase,
     val deleteAccountUseCase: DeleteAccountUseCase,
     val makeOrderUseCase: MakeOrderUseCase,
-    val getOrderHistoryUseCase : GetOrderHistoryUseCase
+    val getOrderHistoryUseCase : GetOrderHistoryUseCase,
+    val getOrderByIdUseCase: GetOrderByIdUseCase
 )

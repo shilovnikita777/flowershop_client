@@ -105,7 +105,8 @@ object FlowerAppModule {
         updateAuthorBouquetInBagUseCase = UpdateAuthorBouquetInBagUseCase(repository),
         deleteAccountUseCase = DeleteAccountUseCase(repository),
         makeOrderUseCase = MakeOrderUseCase(repository),
-        getOrderHistoryUseCase = GetOrderHistoryUseCase(repository)
+        getOrderHistoryUseCase = GetOrderHistoryUseCase(repository),
+        getOrderByIdUseCase = GetOrderByIdUseCase(repository)
     )
 
     @Singleton

@@ -7,6 +7,7 @@ object Constants {
     const val NO_USER_CONSTANT = -1
     const val NO_PRODUCT_CONSTANT = -1
     const val NO_CATEGORY_CONSTANT = -1
+    const val NO_ORDER_CONSTANT = -1
 
     const val MIN_PRODUCT_COUNT = 1
     const val MAX_PRODUCT_COUNT = 9999

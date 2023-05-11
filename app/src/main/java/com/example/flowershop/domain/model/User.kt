@@ -30,7 +30,7 @@ class User(
 
     class Order(
         val id: Int = -1,
-        val products: MutableList<ProductInBag>? = null,
+        val products: MutableList<ProductInBag>,
         val date: LocalDate,
         val phone: String,
         val address: String,

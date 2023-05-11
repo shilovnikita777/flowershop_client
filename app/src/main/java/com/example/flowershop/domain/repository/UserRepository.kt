@@ -49,4 +49,6 @@ interface UserRepository {
     fun makeOrder(orderData: User.Order) : Flow<Response<Boolean>>
 
     fun getOrderHistory() : Flow<Response<List<User.Order>>>
+
+    fun getOrderById(id : Int) : Flow<Response<User.Order>>
 }
