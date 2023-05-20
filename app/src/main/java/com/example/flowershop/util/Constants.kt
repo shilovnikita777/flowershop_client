@@ -30,7 +30,7 @@ object Constants {
     const val API_STATUS_UNAUTHORIZED = 401
 
     const val VK_URL = "https://vk.com/topppo4an"
-    const val TELEGRAM_URL = "https://t.me/asskelxdd"
+    const val TELEGRAM_URL = "https://telegram.me/asskelxdd"
     const val GMAIL_ADDRESS = "shilovnikita129@gmail.com"
 
     const val PHONE_LENGTH = 12

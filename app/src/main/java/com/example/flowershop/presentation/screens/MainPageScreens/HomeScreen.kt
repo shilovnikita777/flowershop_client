@@ -515,38 +515,29 @@ fun ProductBigCard(
                 modifier = Modifier
                     .padding(top = 8.dp, start = 6.dp, end = 6.dp)
             ) {
-                Text(
-                    text = product.first.name,
-                    style = MaterialTheme.typography.h3,
-                    color = MaterialTheme.colors.onBackground,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .height(42.dp)
-                )
+//                Text(
+//                    text = product.first.name,
+//                    style = MaterialTheme.typography.h3,
+//                    color = MaterialTheme.colors.onBackground,
+//                    maxLines = 2,
+//                    overflow = TextOverflow.Ellipsis,
+//                    modifier = Modifier
+//                        .height(42.dp)
+//                )
                 Row(
                     modifier = Modifier
                         .padding(top = 6.dp)
                 ) {
-                    Image(
-                        imageVector = ImageVector
-                            .vectorResource(
-                                id = R.drawable.star
-                            ),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(18.dp)
-                    )
                     Text(
-                        text = "${product.first.rating.value}",
-                        style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
+                        text = product.first.name,
+                        style = MaterialTheme.typography.h3,
                         color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                    Spacer(
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .weight(1f)
+                            .height(42.dp)
+                            .padding(end = 8.dp)
                     )
                     when (val response = product.third.value) {
                         is Response.Loading -> {
@@ -873,43 +864,24 @@ fun ProductBigCardPlaceholder() {
                 modifier = Modifier
                     .padding(top = 8.dp, start = 6.dp, end = 6.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(42.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(MaterialTheme.colors.onSurface)
-                    )
-                }
+
                 Row(
                     modifier = Modifier
                         .padding(top = 6.dp)
                 ) {
-                    Image(
-                        imageVector = ImageVector
-                            .vectorResource(
-                                id = R.drawable.star
-                            ),
-                        contentDescription = "rating",
-                        modifier = Modifier
-                            .size(18.dp)
-                    )
                     Box(
                         modifier = Modifier
-                            .padding(start = 4.dp)
-                            .width(25.dp)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(MaterialTheme.colors.onSurface)
-                    )
-                    Spacer(
-                        modifier = Modifier
                             .weight(1f)
-                    )
+                            .height(42.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .width(100.dp)
+                                .height(20.dp)
+                                .clip(RoundedCornerShape(5.dp))
+                                .background(MaterialTheme.colors.onSurface)
+                        )
+                    }
                     Box(
                         modifier = Modifier
                             .width(20.dp)

@@ -23,7 +23,7 @@ fun AboutCompanyScreen() {
         )
         Text(
             text = "Данный проект представляет собой дипломную работу студента " +
-                    "ИКТИБ МОП ЭВМ Шилова Никиты Андреевича",
+                    "ИКТИБ МОП ЭВМ КТбо4-7 Шилова Никиты Андреевича",
             style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier

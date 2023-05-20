@@ -113,13 +113,14 @@ fun ProfileScreen(
                 }
                 is Response.Success -> {
                     if (userMainInfoResponse.data.image?.isNotEmpty() == true) {
+                        Log.d("xd-5",userMainInfoResponse.data.image)
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(userMainInfoResponse.data.image)
                                 .build(),
                             contentDescription = "User photo",
                             placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
-                            error = painterResource(id = R.drawable.profile_photo_error),
+                            error = painterResource(id = R.drawable.profile_photo_default),
                             onError = {
                                 Log.d("xd", it.result.throwable.message!!)
                             },

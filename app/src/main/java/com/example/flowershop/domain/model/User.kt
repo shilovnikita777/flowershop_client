@@ -34,7 +34,8 @@ class User(
         val date: LocalDate,
         val phone: String,
         val address: String,
-        val fullname: String
+        val fullname: String,
+        val summ : Int
     )
 
     class OrderHistory(

@@ -79,11 +79,15 @@ fun ProductsScreen(
 
         when(products) {
             is Response.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(top = 24.dp)
+                    )
+                }
             }
             is Response.Error -> {
                 Text(

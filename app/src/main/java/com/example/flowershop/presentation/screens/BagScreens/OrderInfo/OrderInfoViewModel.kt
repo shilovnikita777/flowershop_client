@@ -72,7 +72,8 @@ class OrderInfoViewModel @Inject constructor(
                 date = LocalDate.now(),
                 phone = _state.value.phone.text,
                 address = _state.value.address.text,
-                fullname = _state.value.fullname.text
+                fullname = _state.value.fullname.text,
+                summ = (_userBagResponse.value as Response.Success).data.total
             )
             userUseCases.makeOrderUseCase(order).collect {
                 _makeOrderResponse.value = it

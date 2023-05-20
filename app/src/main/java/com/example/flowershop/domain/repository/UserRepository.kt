@@ -1,5 +1,6 @@
 package com.example.flowershop.domain.repository
 
+import android.net.Uri
 import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.ProductInBag
 import com.example.flowershop.domain.model.ProductWithCount
@@ -36,7 +37,7 @@ interface UserRepository {
 
     fun getUserMainInfo(userId: Int) : Flow<Response<UserMainInfoResponse>>
 
-    fun changeUserMainInfo(userId: Int, userData: User.Data) : Flow<Response<Boolean>>
+    fun changeUserMainInfo(username: String, image: String) : Flow<Response<Boolean>>
 
     fun updateProductInBag(productWithCount: ProductWithCount, userId: Int) : Flow<Response<Boolean>>
 

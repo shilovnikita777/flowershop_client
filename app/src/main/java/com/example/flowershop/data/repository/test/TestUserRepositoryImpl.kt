@@ -48,6 +48,10 @@ class TestUserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun changeUserMainInfo(username: String, image: String): Flow<Response<Boolean>> {
+        TODO("Not yet implemented")
+    }
+
     //    override fun getBagByUserId(id: Int): Flow<Response<List<ProductWithCount>>> = flow {
 //        emit(Response.Loading)
 //
@@ -432,7 +436,7 @@ class TestUserRepositoryImpl @Inject constructor(
 //        }
 //    }.flowOn(Dispatchers.IO)
 
-    override fun changeUserMainInfo(userId: Int, userData: User.Data): Flow<Response<Boolean>> = flow {
+    fun changeUserMainInfo(userId: Int, userData: User.Data): Flow<Response<Boolean>> = flow {
         emit(Response.Loading)
 
         try {

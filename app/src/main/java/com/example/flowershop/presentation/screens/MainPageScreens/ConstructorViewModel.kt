@@ -215,14 +215,14 @@ class ConstructorViewModel @Inject constructor(
                 count = it.count.value
             )
         }
-        if (_currentProductResponse.value is Response.Success) {
+        if (productId != NO_PRODUCT_CONSTANT) {
             return ProductInBag(
                 productWithCount = ProductWithCount(
                     product = Bouquet(
-                        id = _currentProduct.value.productWithCount.product.id,
-                        image = _currentProduct.value.productWithCount.product.image,
-                        name = _currentProduct.value.productWithCount.product.name,
-                        description = _currentProduct.value.productWithCount.product.description,
+                        id = productId,
+                        image = Image(R.drawable.author_bouquet_image.toString()),
+                        name = AUTHOR_BOUQUET_NAME,
+                        description = AUTHOR_BOUQUET_DESCRIPTION,
                         flowers = flowers,
                         type = "bouquet",
                         decoration = _selectedDecoration.value,
@@ -233,7 +233,6 @@ class ConstructorViewModel @Inject constructor(
                 )
             )
         } else {
-
             var categories = listOf<Int>()
             flowers.forEach {
                 categories.union(it.product.categoriesIds)
@@ -243,11 +242,11 @@ class ConstructorViewModel @Inject constructor(
             val price = flowers.sumOf {
                 it.product.price * it.count
             }
-
+            Log.d("xd100",productId.toString())
             return ProductInBag(
                 productWithCount = ProductWithCount(
                     product = Bouquet(
-                        id = AUTHOR_BOUQUET_ID,
+                        id = productId,
                         price = price,
                         image = Image(R.drawable.author_bouquet_image.toString()),
                         name = AUTHOR_BOUQUET_NAME,
@@ -264,6 +263,12 @@ class ConstructorViewModel @Inject constructor(
             )
         }
     }
+
+    fun changeProductId(id : Int) {
+        productId = id
+    }
+
+
 
 //    fun changeChosenDecoration(decoration: Decoration) {
 //        _selectedDecoration.value = decoration

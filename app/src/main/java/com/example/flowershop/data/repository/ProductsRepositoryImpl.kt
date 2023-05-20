@@ -4,6 +4,7 @@ import com.example.flowershop.data.helpers.apiRequestFlow
 import com.example.flowershop.data.network.ProductsApiService
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.presentation.model.SearchConditions
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class ProductsRepositoryImpl @Inject constructor(

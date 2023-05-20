@@ -9,6 +9,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UserApiService {
@@ -89,4 +90,9 @@ interface UserApiService {
 
     @GET("user/orders/{id}")
     suspend fun getOrderById(@Path("id") id : Int) : Response<User.Order>
+
+    @PUT("user/userinfo/update")
+    suspend fun updateUserInfo(
+        @Body userInfo : UpdateUserInfoRequest
+    ) : Response<Boolean>
 }

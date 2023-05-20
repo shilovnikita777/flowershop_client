@@ -7,6 +7,12 @@ import com.example.flowershop.data.network.UserApiService
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -136,8 +142,12 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.getUserMainInfo()
     }
 
-    override fun changeUserMainInfo(userId: Int, userData: User.Data): Flow<Response<Boolean>> {
-        TODO("Not yet implemented")
+    override fun changeUserMainInfo(username: String, image: String) = apiRequestFlow {
+        val userData = UpdateUserInfoRequest(
+            username = username,
+            image = image
+        )
+        userApiService.updateUserInfo(userData)
     }
 
     override fun updateProductInBag(
@@ -216,7 +226,8 @@ class UserRepositoryImpl @Inject constructor(
             date = orderData.date,
             phone = orderData.phone,
             address = orderData.address,
-            fullname = orderData.fullname
+            fullname = orderData.fullname,
+            summ = orderData.summ
         )
         userApiService.makeOrder(order)
     }

@@ -81,7 +81,12 @@ fun OrderHistoryItemScreen(orderId : Int) {
                     .verticalScroll(rememberScrollState())
                     .padding(top = 24.dp)
             ) {
-                Log.d("xd-3", orderResponse.data.products?.toString() ?: "null list")
+                h2(
+                    text = "Информация о заказе",
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .padding(bottom = 16.dp, start = 24.dp)
+                )
                 Date(orderResponse.data.date)
                 Separator(
                     modifier = Modifier
@@ -119,8 +124,11 @@ fun Date(date: LocalDate) {
         modifier = Modifier
             .padding(horizontal = 24.dp)
     ) {
-        h2(
+        Text(
             text = "Дата",
+            style = MaterialTheme.typography.h3.copy(
+                fontSize = 20.sp
+            ),
             color = MaterialTheme.colors.onBackground
         )
         Row(
@@ -138,7 +146,7 @@ fun Date(date: LocalDate) {
             Text(
                 text = date.toString(),
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h4.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 16.sp
                 )
             )
@@ -152,8 +160,11 @@ fun Address(address: String) {
         modifier = Modifier
             .padding(top = 16.dp, start = 24.dp, end = 24.dp)
     ) {
-        h2(
+        Text(
             text = "Адрес доставки",
+            style = MaterialTheme.typography.h3.copy(
+                fontSize = 20.sp
+            ),
             color = MaterialTheme.colors.onBackground
         )
 
@@ -172,7 +183,7 @@ fun Address(address: String) {
             Text(
                 text = address,
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h4.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 16.sp
                 )
             )
@@ -186,8 +197,11 @@ fun Receiver(fullname: String) {
         modifier = Modifier
             .padding(top = 16.dp, start = 24.dp, end = 24.dp)
     ) {
-        h2(
+        Text(
             text = "Получатель",
+            style = MaterialTheme.typography.h3.copy(
+                fontSize = 20.sp
+            ),
             color = MaterialTheme.colors.onBackground
         )
         Row(
@@ -205,7 +219,7 @@ fun Receiver(fullname: String) {
             Text(
                 text = fullname,
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h4.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 16.sp
                 )
             )
@@ -215,8 +229,11 @@ fun Receiver(fullname: String) {
 
 @Composable
 fun Composition(products: List<ProductInBag>) {
-    h2(
+    Text(
         text = "Состав",
+        style = MaterialTheme.typography.h3.copy(
+            fontSize = 20.sp
+        ),
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .padding(top = 16.dp, start = 24.dp, end = 24.dp)

@@ -107,7 +107,7 @@ class SignUpViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 username = _state.value.username.copy(
                     isValid = false,
-                    msg = "Имя пользователя должно быть не более 20 символов"
+                    msg = "Имя пользователя должно быть не менее 1 и не более 20 символов"
                 )
             )
         }
@@ -157,7 +157,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    private fun isUsernameValid(username: String) = username.length <= Constants.USERNAME_MAX_LENGTH
+    private fun isUsernameValid(username: String) = username.length <= Constants.USERNAME_MAX_LENGTH && username.isNotEmpty()
 
     private fun isMailValid(mail: String) = android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()
 

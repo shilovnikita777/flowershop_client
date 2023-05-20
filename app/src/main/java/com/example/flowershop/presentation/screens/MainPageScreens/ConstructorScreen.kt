@@ -182,8 +182,7 @@ fun ConstructorScreen(navController: NavHostController, productId: Int) {
                 ToBag(
                     productViewModel = constructorViewModel,
                     userProductViewModel = userProductViewModel,
-                    isButtonEnabled = constructorViewModel.flowersInBouquet.isNotEmpty(),
-                    isAuthor = true
+                    isButtonEnabled = constructorViewModel.flowersInBouquet.isNotEmpty()
                 )
             }
         }
@@ -662,5 +661,110 @@ fun FlowerCard(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ToBag(
+    productViewModel: ConstructorViewModel,
+    userProductViewModel: UserProductViewModel,
+    isButtonEnabled: Boolean
+){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp, start = 24.dp, end = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(
+            text = "${productViewModel.price.value} ₽",
+            style = MaterialTheme.typography.h2,
+            color = MaterialTheme.colors.onBackground,
+            modifier = Modifier
+                .align(alignment = Alignment.End)
+        )
+        when(val isProductInBagResponse = productViewModel.isProductInBag.value) {
+            is Response.Loading -> {
+                Box(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp)
+                        .height(65.dp)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Error -> {
+                Text(
+                    text = isProductInBagResponse.message,
+                    color = MaterialTheme.colors.onBackground,
+                    style = MaterialTheme.typography.h4,
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                )
+            }
+            is Response.Success -> {
+                if (isProductInBagResponse.data) {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp)
+                            .height(65.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primaryVariant,
+                            disabledBackgroundColor = MaterialTheme.colors.onError
+                        ),
+                        enabled = isButtonEnabled,
+                        shape = RoundedCornerShape(56.dp),
+                        onClick = {
+                            userProductViewModel.updateAuthorBouquetInBag(
+                                productWithCount = productViewModel.getProduct().productWithCount,
+                                onValueChanged = {
+                                    productViewModel.changeProductInBagState(it)
+                                }
+                            )
+                        }
+                    ) {
+                        Text(
+                            text = "Обновить товар в корзине",
+                            style = MaterialTheme.typography.h3,
+                            color = Color.White
+                        )
+                    }
+                } else {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp)
+                            .height(65.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primaryVariant,
+                            disabledBackgroundColor = MaterialTheme.colors.onError
+                        ),
+                        enabled = isButtonEnabled,
+                        shape = RoundedCornerShape(56.dp),
+                        onClick = {
+                            userProductViewModel.addAuthorToBag(
+                                productWithCount = productViewModel.getProduct().productWithCount,
+                                onValueChanged = {
+                                    productViewModel.changeProductInBagState(it)
+                                },
+                                changeProductId = {
+                                    productViewModel.changeProductId(it)
+                                }
+                            )
+                        }
+                    ) {
+                        Text(
+                            text = "Добавить в корзину",
+                            style = MaterialTheme.typography.h3,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+        }
+
     }
 }

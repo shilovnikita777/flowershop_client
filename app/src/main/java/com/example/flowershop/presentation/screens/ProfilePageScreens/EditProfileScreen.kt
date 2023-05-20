@@ -1,5 +1,9 @@
 package com.example.flowershop.presentation.screens.ProfilePageScreens
 
+import android.content.ContentResolver
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,13 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.flowershop.presentation.navigation.Graph
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.User
+import java.io.File
 
 @Composable
 fun EditProfileScreen(
@@ -150,7 +157,9 @@ fun ImageHolder(
     val selectImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) {
-        editProfileViewModel.changeSelectedImage(it.toString())
+        if (it != null) {
+            editProfileViewModel.changeSelectedImage(it.toString())
+        }
     }
     Box(
         modifier = modifier
@@ -161,59 +170,20 @@ fun ImageHolder(
                 selectImageLauncher.launch("image/*")
             }
     ) {
-        val painter = rememberAsyncImagePainter(
-            model = selectedImage
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(selectedImage)
+                .build(),
+            contentDescription = "User photo",
+            placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
+            error = painterResource(id = R.drawable.profile_photo_default),
+            onError = {
+                Log.d("xd", it.result.throwable.message!!)
+            },
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(CircleShape)
         )
-        if (selectedImage.isNotEmpty()) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(selectedImage)
-                    .build(),
-                contentDescription = "User photo",
-                placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
-                error = painterResource(id = R.drawable.profile_photo_error),
-                onError = {
-                    Log.d("xd", it.result.throwable.message!!)
-                },
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-            )
-        } else {
-            if (userImage.isNotEmpty()){
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(userImage)
-                        .build(),
-                    contentDescription = "User photo",
-                    placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
-                    error = painterResource(id = R.drawable.profile_photo_error),
-                    onError = {
-                        Log.d("xd", it.result.throwable.message!!)
-                    },
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
-                )
-            }
-            Image(
-                painter = painterResource(R.drawable.profile_photo_default),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(CircleShape)
-            )
-        }
-
-//        Image(
-//            painter = if (selectedImage != null) painter else painterResource(R.drawable.escanor),
-//            contentDescription = "",
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clip(RoundedCornerShape(100.dp))
-//        )
     }
 }

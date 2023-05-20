@@ -31,6 +31,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -241,9 +242,7 @@ fun ProductScreen(
 
                 ToBag(
                     productViewModel = productViewModel,
-                    userProductViewModel = userProductViewModel,
-                    isButtonEnabled = true,
-                    isAuthor = false
+                    userProductViewModel = userProductViewModel
                 )
             }
         }
@@ -351,33 +350,21 @@ fun MainInfo(
         modifier = Modifier
             .padding(top = 16.dp,start = 24.dp,end = 24.dp)
     ) {
-        h2(
-            text = product.name,
-            color = MaterialTheme.colors.onBackground
-        )
+
         Row(
             modifier = Modifier
                 .padding(top = 8.dp)
         ) {
-            Image(
-                imageVector = ImageVector
-                    .vectorResource(
-                        id = R.drawable.star
-                    ),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(20.dp)
-            )
             Text(
-                text = "${product.rating.value}",
-                style = MaterialTheme.typography.h3,
+                text = product.name,
+                style = MaterialTheme.typography.h2,
                 color = MaterialTheme.colors.onBackground,
-                modifier = Modifier
-                    .padding(start = 4.dp)
-            )
-            Spacer(
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .weight(1f)
+                    .height(42.dp)
+                    .padding(end = 8.dp)
             )
             when (isProductInFavouriteResponse) {
                 is Response.Loading -> {
@@ -403,6 +390,7 @@ fun MainInfo(
                                 ),
                             contentDescription = "",
                             modifier = Modifier
+                                .padding(top = 6.dp)
                                 .clickable {
                                     userProductViewModel.removeProductFromFavourite(
                                         product = product
@@ -419,6 +407,7 @@ fun MainInfo(
                                 ),
                             contentDescription = "",
                             modifier = Modifier
+                                .padding(top = 6.dp)
                                 .clickable {
                                     userProductViewModel.addProductToFavourite(
                                         product = product
@@ -892,9 +881,7 @@ fun Table(
 @Composable
 fun ToBag(
     productViewModel: ProductBaseViewModel,
-    userProductViewModel: UserProductViewModel,
-    isButtonEnabled: Boolean,
-    isAuthor : Boolean
+    userProductViewModel: UserProductViewModel
 ){
     Column(
         modifier = Modifier
@@ -941,24 +928,14 @@ fun ToBag(
                             backgroundColor = MaterialTheme.colors.primaryVariant,
                             disabledBackgroundColor = MaterialTheme.colors.onError
                         ),
-                        enabled = isButtonEnabled,
                         shape = RoundedCornerShape(56.dp),
                         onClick = {
-                            if (!isAuthor) {
-                                userProductViewModel.updateProductInBag(
-                                    productWithCount = productViewModel.getProduct().productWithCount,
-                                    onValueChanged = {
-                                        productViewModel.changeProductInBagState(it)
-                                    }
-                                )
-                            } else {
-                                userProductViewModel.updateAuthorBouquetInBag(
-                                    productWithCount = productViewModel.getProduct().productWithCount,
-                                    onValueChanged = {
-                                        productViewModel.changeProductInBagState(it)
-                                    }
-                                )
-                            }
+                            userProductViewModel.updateProductInBag(
+                                productWithCount = productViewModel.getProduct().productWithCount,
+                                onValueChanged = {
+                                    productViewModel.changeProductInBagState(it)
+                                }
+                            )
                         }
                     ) {
                         Text(
@@ -977,25 +954,14 @@ fun ToBag(
                             backgroundColor = MaterialTheme.colors.primaryVariant,
                             disabledBackgroundColor = MaterialTheme.colors.onError
                         ),
-                        enabled = isButtonEnabled,
                         shape = RoundedCornerShape(56.dp),
                         onClick = {
-                            if (!isAuthor) {
-                                userProductViewModel.addProductToBag(
-                                    productWithCount = productViewModel.getProduct().productWithCount,
-                                    onValueChanged = {
-                                        productViewModel.changeProductInBagState(it)
-                                    }
-                                )
-                            } else {
-                                userProductViewModel.addAuthorToBag(
-                                    productWithCount = productViewModel.getProduct().productWithCount,
-                                    onValueChanged = {
-                                        productViewModel.changeProductInBagState(it)
-                                    }
-                                )
-                            }
-
+                            userProductViewModel.addProductToBag(
+                                productWithCount = productViewModel.getProduct().productWithCount,
+                                onValueChanged = {
+                                    productViewModel.changeProductInBagState(it)
+                                }
+                            )
                         }
                     ) {
                         Text(

@@ -77,12 +77,17 @@ class UserProductViewModel @Inject constructor(
         }
     }
 
-    fun addAuthorToBag(productWithCount: ProductWithCount, onValueChanged: (Response<Boolean>) -> Unit) {
+    fun addAuthorToBag(
+        productWithCount: ProductWithCount,
+        onValueChanged: (Response<Boolean>) -> Unit,
+        changeProductId : (Int) -> Unit
+    ) {
         viewModelScope.launch {
             userUseCases.addAuthorToBagUseCase(
                 product = productWithCount
             ).collect {
                 if (it is Response.Success) {
+                    changeProductId(it.data)
                     isAuthorBouquetInBag(it.data) {
                         onValueChanged(it)
                     }

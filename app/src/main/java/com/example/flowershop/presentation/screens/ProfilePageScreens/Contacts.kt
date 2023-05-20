@@ -1,8 +1,12 @@
 package com.example.flowershop.presentation.screens.ProfilePageScreens
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -18,11 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import com.example.flowershop.R
+import com.example.flowershop.presentation.navigation.Graph
 import com.example.flowershop.presentation.screens.common.h2
 import com.example.flowershop.presentation.screens.common.noRippleClickable
 import com.example.flowershop.util.Constants.GMAIL_ADDRESS
@@ -97,20 +103,14 @@ fun Contacts() {
             )
         }
 
-        val email = GMAIL_ADDRESS
-        val subject = "Мобильное приложение магазина цветов"
-        val gmailIntent = Intent(Intent.ACTION_SEND).apply {
-            data = "mailto:$email?subject=${subject}".toUri()
-        }
+
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(top = 16.dp)
                 .noRippleClickable {
-                    gmailIntent.resolveActivityInfo(context.packageManager, 0)?.let {
-                        context.startActivity(gmailIntent)
-                    }
+                    context.openMail()
                 }
         ) {
             Image(
@@ -129,5 +129,21 @@ fun Contacts() {
                     .padding(start = 16.dp)
             )
         }
+    }
+}
+
+fun Context.openMail() {
+    val email = GMAIL_ADDRESS
+    val subject = "Мобильное приложение магазина цветов"
+    val gmailIntent = Intent(Intent.ACTION_SEND).apply {
+        data = "mailto:$email?subject=${subject}".toUri()
+    }
+
+    try {
+        startActivity(gmailIntent)
+    } catch (e : ActivityNotFoundException) {
+        Toast.makeText(this, "Нет подходящего приложения для отправки письма", Toast.LENGTH_SHORT).show()
+    } catch (e : Exception) {
+        Toast.makeText(this, "Непредвиденная ошибка", Toast.LENGTH_SHORT).show()
     }
 }

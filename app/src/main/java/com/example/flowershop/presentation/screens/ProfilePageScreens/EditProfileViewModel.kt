@@ -1,5 +1,6 @@
 package com.example.flowershop.presentation.screens.ProfilePageScreens
 
+import android.net.Uri
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -43,7 +44,10 @@ class EditProfileViewModel @Inject constructor(
 
     fun changeUserMainInfo(userData: User.Data, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            userUseCases.changeUserMainInfoUseCase(_userId,userData).collect {
+            userUseCases.changeUserMainInfoUseCase(
+                username = _username.value,
+                image = _selectedImage.value
+            ).collect {
                 _changeMainInfoResponse.value = it
                 if (it is Response.Success) {
                     onSuccess()
