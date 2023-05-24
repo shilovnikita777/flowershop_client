@@ -1,12 +1,9 @@
 package com.example.flowershop.domain.repository
 
-import android.net.Uri
-import com.example.flowershop.domain.model.Product
-import com.example.flowershop.domain.model.ProductInBag
-import com.example.flowershop.domain.model.ProductWithCount
-import com.example.flowershop.domain.model.User
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
+import com.example.flowershop.domain.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -51,5 +48,7 @@ interface UserRepository {
 
     fun getOrderHistory() : Flow<Response<List<User.Order>>>
 
-    fun getOrderById(id : Int) : Flow<Response<User.Order>>
+    fun getOrderById(id : Int) : Flow<Response<OrderResponse>>
+
+    fun usePromocode(promo : String) : Flow<Response<Promocode>>
 }

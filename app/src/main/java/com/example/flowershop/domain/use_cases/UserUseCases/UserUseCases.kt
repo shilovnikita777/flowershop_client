@@ -21,5 +21,6 @@ data class UserUseCases (
     val deleteAccountUseCase: DeleteAccountUseCase,
     val makeOrderUseCase: MakeOrderUseCase,
     val getOrderHistoryUseCase : GetOrderHistoryUseCase,
-    val getOrderByIdUseCase: GetOrderByIdUseCase
+    val getOrderByIdUseCase: GetOrderByIdUseCase,
+    val usePromocodeUseCase: UsePromocodeUseCase
 )

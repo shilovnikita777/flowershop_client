@@ -6,6 +6,7 @@ import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.UserRepository
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_ID
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -37,7 +38,7 @@ class TestUserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getOrderById(id: Int): Flow<Response<User.Order>> {
+    override fun getOrderById(id: Int): Flow<Response<OrderResponse>> {
         TODO("Not yet implemented")
     }
 
@@ -495,4 +496,8 @@ class TestUserRepositoryImpl @Inject constructor(
             emit(Response.Error(e.localizedMessage ?: "Error"))
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun usePromocode(promo: String): Flow<Response<Promocode>> {
+        TODO("Not yet implemented")
+    }
 }

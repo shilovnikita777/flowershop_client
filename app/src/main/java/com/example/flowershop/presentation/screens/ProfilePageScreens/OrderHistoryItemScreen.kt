@@ -35,6 +35,7 @@ import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.Bouquet
 import com.example.flowershop.domain.model.FlowersWithDecoration
 import com.example.flowershop.domain.model.ProductInBag
+import com.example.flowershop.domain.model.Promocode
 import com.example.flowershop.presentation.navigation.CatalogNavRoute
 import com.example.flowershop.presentation.navigation.MainNavRoute
 import com.example.flowershop.presentation.screens.BagScreens.BagViewModel
@@ -104,6 +105,16 @@ fun OrderHistoryItemScreen(orderId : Int) {
                     modifier = Modifier
                         .padding(top = 16.dp)
                 )
+
+                if (orderResponse.data.promocode != null) {
+                    Promocode(
+                        promocode = orderResponse.data.promocode
+                    )
+                    Separator(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                    )
+                }
 
                 Composition(orderResponse.data.products ?: emptyList())
                 Separator(
@@ -218,6 +229,43 @@ fun Receiver(fullname: String) {
             )
             Text(
                 text = fullname,
+                color = MaterialTheme.colors.onBackground,
+                style = MaterialTheme.typography.subtitle1.copy(
+                    fontSize = 16.sp
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun Promocode(promocode: Promocode) {
+    Column(
+        modifier = Modifier
+            .padding(top = 16.dp, start = 24.dp, end = 24.dp)
+    ) {
+        Text(
+            text = "Промокод",
+            style = MaterialTheme.typography.h3.copy(
+                fontSize = 20.sp
+            ),
+            color = MaterialTheme.colors.onBackground
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(top = 12.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.discount_color),
+                contentDescription = "location",
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(end = 8.dp)
+            )
+            Text(
+                text = "Промокод ${promocode.value} на ${promocode.amount}%",
                 color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 16.sp

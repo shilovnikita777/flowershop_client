@@ -1,5 +1,6 @@
 package com.example.flowershop.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -95,6 +96,10 @@ fun RowScope.AddItem(
         },
         selected = selected,
         onClick = {
+            currentDestination?.hierarchy?.forEach {
+                Log.d("xd100", it.route.toString())
+            }
+
             navController.navigate(screen.route)
         }
     )

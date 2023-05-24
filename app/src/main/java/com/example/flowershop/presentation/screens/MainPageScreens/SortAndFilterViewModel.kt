@@ -21,7 +21,12 @@ open class SortAndFilterViewModel (
     var sorts = mutableStateOf(listOf(ListItem("Розы"),
         ListItem("Тюльпаны"),
         ListItem("Ромашки"),
-        ListItem("Пионы")
+        ListItem("Пионы"),
+        ListItem("Ирисы"),
+        ListItem("Хризантемы"),
+        ListItem("Гвоздики"),
+        ListItem("Альстромерии"),
+        ListItem("Маттиолы")
     ))
         private set
 

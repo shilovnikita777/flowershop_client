@@ -5,10 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.flowershop.presentation.screens.BagScreens.OrderInfo.OrderInfoScreen
-import com.example.flowershop.presentation.screens.ProfilePageScreens.*
 import com.example.flowershop.screens.BagScreen
-import com.example.flowershop.screens.FavouriteScreen
-import com.example.flowershop.screens.ProfileScreen
 
 fun NavGraphBuilder.bagNavGraph(
     navController : NavHostController

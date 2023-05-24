@@ -8,5 +8,6 @@ class OrderRequest(
     val phone : String,
     val address : String,
     val fullname : String,
+    val promocodeId : Int?,
     val summ : Int
 )

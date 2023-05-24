@@ -249,38 +249,38 @@ fun ProductsInBag(
                 navController = navController
             )
         }
-        item {
-            TextField(
-                value = promocode,
-                onValueChange = {
-                    onPromocodeChange(it)
-
-                },
-                shape = RoundedCornerShape(15.dp),
-                singleLine = true,
-                textStyle = MaterialTheme.typography.subtitle1
-                    .copy(
-                        color = MaterialTheme.colors.onSecondary,
-                        fontWeight = FontWeight.Medium
-                    ),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.secondaryVariant,
-                    focusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                placeholder = {
-                    Text(
-                        text = "Введите промокод",
-                        style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.secondary
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            )
-        }
+//        item {
+//            TextField(
+//                value = promocode,
+//                onValueChange = {
+//                    onPromocodeChange(it)
+//
+//                },
+//                shape = RoundedCornerShape(15.dp),
+//                singleLine = true,
+//                textStyle = MaterialTheme.typography.subtitle1
+//                    .copy(
+//                        color = MaterialTheme.colors.onSecondary,
+//                        fontWeight = FontWeight.Medium
+//                    ),
+//                colors = TextFieldDefaults.textFieldColors(
+//                    backgroundColor = MaterialTheme.colors.secondaryVariant,
+//                    focusedIndicatorColor = Color.Transparent,
+//                    disabledIndicatorColor = Color.Transparent,
+//                    unfocusedIndicatorColor = Color.Transparent
+//                ),
+//                placeholder = {
+//                    Text(
+//                        text = "Введите промокод",
+//                        style = MaterialTheme.typography.subtitle1,
+//                        color = MaterialTheme.colors.secondary
+//                    )
+//                },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(50.dp)
+//            )
+//        }
         item {
             Row(
                 modifier = Modifier
@@ -288,8 +288,8 @@ fun ProductsInBag(
             ) {
                 Text(
                     text = "Итого:",
-                    style = MaterialTheme.typography.h2.copy(fontSize = 20.sp),
-                    color = MaterialTheme.colors.primary,
+                    style = MaterialTheme.typography.h4.copy(fontSize = 20.sp),
+                    color = MaterialTheme.colors.onBackground,
                 )
                 Row(
                     modifier = Modifier
@@ -299,12 +299,12 @@ fun ProductsInBag(
                 ) {
                     Text(
                         text = "₽ ",
-                        style = MaterialTheme.typography.h2.copy(fontSize = 20.sp),
+                        style = MaterialTheme.typography.h4.copy(fontSize = 20.sp),
                         color = MaterialTheme.colors.primaryVariant,
                     )
                     Text(
                         text = total.toString(),
-                        style = MaterialTheme.typography.h2.copy(fontSize = 20.sp),
+                        style = MaterialTheme.typography.h4.copy(fontSize = 20.sp),
                         color = MaterialTheme.colors.onBackground,
                     )
                 }
@@ -314,7 +314,7 @@ fun ProductsInBag(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 16.dp)
+                    .padding(bottom = 16.dp)
                     .height(65.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.primaryVariant
@@ -354,10 +354,12 @@ fun BagCard(
                 if (productInBag.first.productWithCount.product.name == AUTHOR_BOUQUET_NAME)
                     navController.navigate(MainNavRoute.Constructor.passId(productInBag.first.productWithCount.product.id))
                 else
-                    navController.navigate(CatalogNavRoute.Product.passIdAndType(
-                        id = productInBag.first.productWithCount.product.id,
-                        type = productInBag.first.productWithCount.product.type
-                    ))
+                    navController.navigate(
+                        CatalogNavRoute.Product.passIdAndType(
+                            id = productInBag.first.productWithCount.product.id,
+                            type = productInBag.first.productWithCount.product.type
+                        )
+                    )
             },
     ) {
         Row(
@@ -573,12 +575,16 @@ fun BagCard(
                     ) {
                         Text(
                             text = "₽ ",
-                            style = MaterialTheme.typography.h3,
+                            style = MaterialTheme.typography.h4.copy(
+                                fontSize = 16.sp
+                            ),
                             color = MaterialTheme.colors.primaryVariant
                         )
                         Text(
                             text = "${productInBag.first.totalPrice}",
-                            style = MaterialTheme.typography.h3,
+                            style = MaterialTheme.typography.h4.copy(
+                                fontSize = 16.sp
+                            ),
                             color = MaterialTheme.colors.onBackground
                         )
 //                        if (productInBag.first.product is Product.Flower) {

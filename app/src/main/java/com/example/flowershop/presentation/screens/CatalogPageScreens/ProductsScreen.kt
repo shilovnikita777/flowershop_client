@@ -282,6 +282,16 @@ fun Products(
     isProductsLoaded : Boolean,
     changeProductsLoaded : (Boolean) -> Unit
 ) {
+    LaunchedEffect(key1 = Unit) {
+        products.forEach { product->
+            viewModel.isProductInBag(product.first) {
+                product.second.value = it
+            }
+            viewModel.isProductInFavourite(product.first) {
+                product.third.value = it
+            }
+        }
+    }
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -290,17 +300,17 @@ fun Products(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ){
-        if (!isProductsLoaded) {
-            products.forEach { product ->
-                viewModel.isProductInBag(product.first) {
-                    product.second.value = it
-                }
-                viewModel.isProductInFavourite(product.first) {
-                    product.third.value = it
-                }
-            }
-            changeProductsLoaded(true)
-        }
+//        if (!isProductsLoaded) {
+//            products.forEach { product ->
+//                viewModel.isProductInBag(product.first) {
+//                    product.second.value = it
+//                }
+//                viewModel.isProductInFavourite(product.first) {
+//                    product.third.value = it
+//                }
+//            }
+//            changeProductsLoaded(true)
+//        }
         items(products) {
             ProductSmallCard(
                 product = it,

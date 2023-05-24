@@ -1,9 +1,11 @@
 package com.example.flowershop.data.network
 
 import com.example.flowershop.data.model.Request.*
+import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.ProductWithCount
+import com.example.flowershop.domain.model.Promocode
 import com.example.flowershop.domain.model.User
 import retrofit2.Response
 import retrofit2.http.Body
@@ -89,10 +91,15 @@ interface UserApiService {
     suspend fun getOrderHistory() : Response<List<User.Order>>
 
     @GET("user/orders/{id}")
-    suspend fun getOrderById(@Path("id") id : Int) : Response<User.Order>
+    suspend fun getOrderById(@Path("id") id : Int) : Response<OrderResponse>
 
     @PUT("user/userinfo/update")
     suspend fun updateUserInfo(
         @Body userInfo : UpdateUserInfoRequest
     ) : Response<Boolean>
+
+    @POST("user/makeorder/usepromo")
+    suspend fun usePromocode(
+        @Body promocode : PromocodeRequest
+    ) : Response<Promocode>
 }

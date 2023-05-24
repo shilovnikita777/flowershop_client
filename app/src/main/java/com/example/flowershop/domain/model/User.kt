@@ -35,7 +35,8 @@ class User(
         val phone: String,
         val address: String,
         val fullname: String,
-        val summ : Int
+        val summ : Int,
+        val promocodeId : Int? = null
     )
 
     class OrderHistory(

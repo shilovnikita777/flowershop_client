@@ -99,14 +99,14 @@ fun SignInScreen(navController: NavHostController) {
             }
         )
 
-        Text(
-            text = "Забыли пароль?",
-            style = MaterialTheme.typography.subtitle1,
-            color = MaterialTheme.colors.secondary,
-            modifier = Modifier
-                .padding(top = 6.dp)
-                .align(Alignment.End)
-        )
+//        Text(
+//            text = "Забыли пароль?",
+//            style = MaterialTheme.typography.subtitle1,
+//            color = MaterialTheme.colors.secondary,
+//            modifier = Modifier
+//                .padding(top = 6.dp)
+//                .align(Alignment.End)
+//        )
 
         Button(
             modifier = Modifier

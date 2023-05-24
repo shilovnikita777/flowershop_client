@@ -14,6 +14,7 @@ data class Table(
 )
 
 data class Promocode(
+    val id : Int,
     val title: String,
     val description: String,
     val value: String,

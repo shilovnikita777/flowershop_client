@@ -3,16 +3,12 @@ package com.example.flowershop.data.repository
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.data.helpers.apiRequestFlow
 import com.example.flowershop.data.model.Request.*
+import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.network.UserApiService
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.UserRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -227,6 +223,7 @@ class UserRepositoryImpl @Inject constructor(
             phone = orderData.phone,
             address = orderData.address,
             fullname = orderData.fullname,
+            promocodeId = orderData.promocodeId,
             summ = orderData.summ
         )
         userApiService.makeOrder(order)
@@ -236,7 +233,15 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.getOrderHistory()
     }
 
-    override fun getOrderById(id: Int) = apiRequestFlow {
+    override fun getOrderById(id: Int): Flow<Response<OrderResponse>> = apiRequestFlow {
         userApiService.getOrderById(id)
+    }
+
+    override fun usePromocode(promo: String): Flow<Response<Promocode>> = apiRequestFlow {
+        val data = PromocodeRequest(
+            promo = promo
+        )
+        delay(2000)
+        userApiService.usePromocode(data)
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.ProductInBag
 import com.example.flowershop.domain.model.ProductWithCount
@@ -25,8 +26,8 @@ class OrderHistoryItemViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _order = mutableStateOf<Response<User.Order>>(Response.Loading)
-    val order : State<Response<User.Order>> = _order
+    private val _order = mutableStateOf<Response<OrderResponse>>(Response.Loading)
+    val order : State<Response<OrderResponse>> = _order
 
     init {
         val orderId = savedStateHandle.get<Int>(ARGUMENT_PRODUCT_ID) ?: NO_ORDER_CONSTANT

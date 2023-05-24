@@ -40,14 +40,9 @@ fun SignUpScreen(navController: NavHostController) {
                 Log.d("xd",signUpState.data.toString())
                 LaunchedEffect(key1 = true) {
                     viewModel.saveUserId(signUpState.data.userInfo.id)
-                    //viewModel.saveUserId(0)
                     viewModel.saveToken(signUpState.data.token)
                     navController.popBackStack()
-                    navController.navigate(
-                        Graph.HOME.passId(
-                            id = signUpState.data.userInfo.id
-                        )
-                    )
+                    navController.navigate(Graph.HOME.route)
                 }
             }
         }

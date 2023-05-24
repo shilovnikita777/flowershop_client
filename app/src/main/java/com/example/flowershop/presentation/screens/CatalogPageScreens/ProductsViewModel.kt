@@ -47,6 +47,7 @@ class ProductsViewModel @Inject constructor(
     }
 
     fun getProducts() : Job {
+        isProductsLoaded = false
         return viewModelScope.launch {
             productsUseCases.getProductsUseCase(_searchConditions.value).map { response ->
                 when (response) {

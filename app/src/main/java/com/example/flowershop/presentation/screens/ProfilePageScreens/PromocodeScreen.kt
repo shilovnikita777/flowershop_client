@@ -131,7 +131,7 @@ fun PromocodesCards(
                     Log.d("xd", it.result.throwable.message!!)
                 },
                 alignment = Alignment.BottomEnd,
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillBounds
             )
         } else AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -144,7 +144,7 @@ fun PromocodesCards(
                 Log.d("xd", it.result.throwable.message!!)
             },
             alignment = Alignment.BottomEnd,
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillBounds
         )
         Column(
             modifier = Modifier

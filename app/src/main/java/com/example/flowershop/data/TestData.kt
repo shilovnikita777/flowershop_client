@@ -50,6 +50,7 @@ class TestData(
     private fun createPromocodes() {
         promocodes.add(
             Promocode(
+                id = -1,
                 title = "на первый заказ",
                 description = "При совершении первого заказа в мобильном приложении",
                 value = "HELLO10",
@@ -59,6 +60,7 @@ class TestData(
         )
         promocodes.add(
             Promocode(
+                id = -1,
                 title = "на тюльпаны",
                 description = "При покупке тюльпанов не в составе букетов",
                 value = "TULIP5",
