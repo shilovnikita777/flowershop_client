@@ -819,7 +819,7 @@ fun Table(
                 is Response.Success -> {
                     Column {
                         Text(
-                            text = "Любая табличка — 50 ₽",
+                            text = "Табличка станет прекрасным дополнением к букету",
                             style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
                             color = MaterialTheme.colors.secondary,
                             modifier = Modifier
@@ -853,7 +853,7 @@ fun Table(
                                         onClick = null
                                     )
                                     Text(
-                                        text = it.text,
+                                        text = "${it.text} — ${it.price} ₽",
                                         style = MaterialTheme.typography.h4,
                                         color = MaterialTheme.colors.onBackground,
                                         modifier = Modifier
