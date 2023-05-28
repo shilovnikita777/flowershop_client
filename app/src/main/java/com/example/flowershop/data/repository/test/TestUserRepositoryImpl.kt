@@ -6,6 +6,7 @@ import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.UserRepository
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_ID
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.presentation.model.UserEditInfo
 import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,7 @@ class TestUserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun changeUserMainInfo(username: String, image: String): Flow<Response<Boolean>> {
+    override fun changeUserMainInfo(userData: UserEditInfo): Flow<Response<Boolean>> {
         TODO("Not yet implemented")
     }
 

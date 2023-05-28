@@ -16,7 +16,7 @@ class User(
     data class Data(
         val username: String,
         val email: String,
-        val image: String
+        val image: Image?
     )
 
     class Bag(

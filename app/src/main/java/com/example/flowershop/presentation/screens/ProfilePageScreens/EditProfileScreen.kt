@@ -1,6 +1,7 @@
 package com.example.flowershop.presentation.screens.ProfilePageScreens
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -28,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
@@ -35,8 +37,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.flowershop.presentation.navigation.Graph
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.domain.model.Image
 import com.example.flowershop.domain.model.User
+import com.example.flowershop.presentation.model.UserEditInfo
 import java.io.File
+import java.io.FileOutputStream
 
 @Composable
 fun EditProfileScreen(
@@ -70,7 +75,7 @@ fun EditProfileScreen(
         is Response.Success -> {
             if (!editProfileViewModel.isDataLoaded) {
                 editProfileViewModel.changeUsername(userMainInfoResponse.data.username)
-                editProfileViewModel.changeSelectedImage(userMainInfoResponse.data.image ?: "")
+                //editProfileViewModel.changeSelectedImage(userMainInfoResponse.data.image, null)
                 editProfileViewModel.isDataLoaded = true
             }
             Column(
@@ -84,10 +89,14 @@ fun EditProfileScreen(
                 )
 
                 ImageHolder(
-                    editProfileViewModel = editProfileViewModel,
-                    userImage = userMainInfoResponse.data.image ?: "",
+                    userImage = userMainInfoResponse.data.image,
+                    selectedImage = editProfileViewModel.selectedImage.value,
+                    context = LocalContext.current,
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
+                        .align(Alignment.CenterHorizontally),
+                    changeSelectedImage = { uri, file ->
+                        editProfileViewModel.changeSelectedImage(uri, file)
+                    }
                 )
 
                 Text(
@@ -119,10 +128,9 @@ fun EditProfileScreen(
                     shape = RoundedCornerShape(56.dp),
                     onClick = {
                         editProfileViewModel.changeUserMainInfo(
-                            userData = User.Data(
+                            userData = UserEditInfo(
                                 username = editProfileViewModel.username.value,
-                                email = userMainInfoResponse.data.email,
-                                image = editProfileViewModel.selectedImage.value
+                                image = editProfileViewModel.selectedImageFile
                             ),
                             onSuccess = {
                                 navController.popBackStack()
@@ -148,17 +156,27 @@ fun EditProfileScreen(
 
 @Composable
 fun ImageHolder(
-    editProfileViewModel: EditProfileViewModel,
-    userImage: String,
-    modifier: Modifier
+    userImage: Image?,
+    selectedImage : Uri?,
+    context : Context,
+    modifier: Modifier,
+    changeSelectedImage: (Uri, File?) -> Unit
 ) {
-    val selectedImage = editProfileViewModel.selectedImage.value
 
     val selectImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) {
         if (it != null) {
-            editProfileViewModel.changeSelectedImage(it.toString())
+            val filesDir = context.filesDir
+            val file = File(filesDir, "userphoto.jpeg")
+            val inputStream = context.contentResolver.openInputStream(it)
+            val outputStream = FileOutputStream(file)
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+            changeSelectedImage(it,file)
         }
     }
     Box(
@@ -170,20 +188,40 @@ fun ImageHolder(
                 selectImageLauncher.launch("image/*")
             }
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(selectedImage)
-                .build(),
-            contentDescription = "User photo",
-            placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
-            error = painterResource(id = R.drawable.profile_photo_default),
-            onError = {
-                Log.d("xd", it.result.throwable.message!!)
-            },
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-        )
+        if (selectedImage != null) {
+            AsyncImage(
+                model = ImageRequest.Builder(context)
+                    .data(selectedImage)
+                    .build(),
+                contentDescription = "User photo",
+                placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
+                error = painterResource(id = R.drawable.profile_photo_default),
+                onError = {
+                    Log.d("xd", it.result.throwable.message!!)
+                },
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            )
+        } else {
+            AsyncImage(
+                model = ImageRequest.Builder(context)
+                    .data(userImage?.getPath())
+                    .build(),
+                contentDescription = "User photo",
+                placeholder = painterResource(id = R.drawable.profile_photo_placeholder),
+                error = painterResource(id = R.drawable.profile_photo_default),
+                onError = {
+                    Log.d("xd", it.result.throwable.message!!)
+                },
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            )
+        }
+
+
     }
 }

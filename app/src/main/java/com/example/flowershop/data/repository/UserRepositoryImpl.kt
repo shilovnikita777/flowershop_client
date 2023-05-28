@@ -7,8 +7,16 @@ import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.network.UserApiService
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.repository.UserRepository
+import com.example.flowershop.presentation.model.UserEditInfo
+import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -138,12 +146,17 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.getUserMainInfo()
     }
 
-    override fun changeUserMainInfo(username: String, image: String) = apiRequestFlow {
-        val userData = UpdateUserInfoRequest(
-            username = username,
-            image = image
+    override fun changeUserMainInfo(userData: UserEditInfo) = apiRequestFlow {
+        val data = UsernameRequest(
+            username = userData.username
         )
-        userApiService.updateUserInfo(userData)
+        val dataPart = Gson().toJson(data).toRequestBody("application/json".toMediaTypeOrNull())
+
+        val imageRequestBody = userData.image?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val imagePart = imageRequestBody?.let {
+            MultipartBody.Part.createFormData("image", userData.image.name, imageRequestBody)
+        }
+        userApiService.updateUserInfo(dataPart, imagePart)
     }
 
     override fun updateProductInBag(

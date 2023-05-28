@@ -7,12 +7,10 @@ import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.ProductWithCount
 import com.example.flowershop.domain.model.Promocode
 import com.example.flowershop.domain.model.User
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserApiService {
     @GET("user/username")
@@ -93,9 +91,11 @@ interface UserApiService {
     @GET("user/orders/{id}")
     suspend fun getOrderById(@Path("id") id : Int) : Response<OrderResponse>
 
+    @Multipart
     @PUT("user/userinfo/update")
     suspend fun updateUserInfo(
-        @Body userInfo : UpdateUserInfoRequest
+        @Part("data") data : RequestBody,
+        @Part image : MultipartBody.Part?
     ) : Response<Boolean>
 
     @POST("user/makeorder/usepromo")

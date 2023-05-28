@@ -13,9 +13,11 @@ import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
+import com.example.flowershop.domain.model.Image
 import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,14 +29,14 @@ class ProfileViewModel @Inject constructor(
     private val tokenManager: TokenManager
 ) : ViewModel() {
 
-    private val _userMainInfoResponse = mutableStateOf<Response<UserMainInfoResponse>>(Response.Loading)
-    val userMainInfoResponse : State<Response<UserMainInfoResponse>> = _userMainInfoResponse
+    private val _userMainInfoResponse = mutableStateOf<Response<User.Data>>(Response.Loading)
+    val userMainInfoResponse: State<Response<User.Data>> = _userMainInfoResponse
 
     private val _logoutResponse = mutableStateOf<Response<Boolean>?>(null)
-    val logoutResponse : State<Response<Boolean>?> = _logoutResponse
+    val logoutResponse: State<Response<Boolean>?> = _logoutResponse
 
     private val _deleteAccResponse = mutableStateOf<Response<Boolean>?>(null)
-    val deleteAccResponse : State<Response<Boolean>?> = _deleteAccResponse
+    val deleteAccResponse: State<Response<Boolean>?> = _deleteAccResponse
 
     private var _userId = NO_USER_CONSTANT
 
@@ -57,7 +59,25 @@ class ProfileViewModel @Inject constructor(
 
     private fun getUserMainInfo() {
         viewModelScope.launch {
-            userUseCases.getUserMainInfoUseCase(_userId).collect {
+            userUseCases.getUserMainInfoUseCase(_userId).map {
+                when (it) {
+                    is Response.Loading -> {
+                        it
+                    }
+                    is Response.Error -> {
+                        it
+                    }
+                    is Response.Success -> {
+                        Response.Success(
+                            User.Data(
+                                username = it.data.username,
+                                email = it.data.email,
+                                image = if (it.data.image != null) Image(it.data.image) else null
+                            )
+                        )
+                    }
+                }
+            }.collect {
                 _userMainInfoResponse.value = it
             }
         }

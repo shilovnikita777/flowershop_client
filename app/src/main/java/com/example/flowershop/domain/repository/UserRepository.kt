@@ -1,6 +1,7 @@
 package com.example.flowershop.domain.repository
 
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.presentation.model.UserEditInfo
 import com.example.flowershop.data.model.Response.OrderResponse
 import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import com.example.flowershop.domain.model.*
@@ -34,7 +35,7 @@ interface UserRepository {
 
     fun getUserMainInfo(userId: Int) : Flow<Response<UserMainInfoResponse>>
 
-    fun changeUserMainInfo(username: String, image: String) : Flow<Response<Boolean>>
+    fun changeUserMainInfo(userData: UserEditInfo) : Flow<Response<Boolean>>
 
     fun updateProductInBag(productWithCount: ProductWithCount, userId: Int) : Flow<Response<Boolean>>
 

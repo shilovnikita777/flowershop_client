@@ -5,12 +5,13 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flowershop.data.UserDatastore
-import com.example.flowershop.domain.model.User
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.util.Constants
 import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.presentation.model.UserEditInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,8 +20,11 @@ class EditProfileViewModel @Inject constructor(
     private val userDatastore: UserDatastore
 ) : ViewModel() {
 
-    private val _selectedImage = mutableStateOf("")
-    val selectedImage : State<String> = _selectedImage
+    private val _selectedImage = mutableStateOf<Uri?>(null)
+    val selectedImage : State<Uri?> = _selectedImage
+
+    var selectedImageFile : File? = null
+    private set
 
     var isDataLoaded = false
 
@@ -42,11 +46,10 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun changeUserMainInfo(userData: User.Data, onSuccess: () -> Unit) {
+    fun changeUserMainInfo(userData: UserEditInfo, onSuccess: () -> Unit) {
         viewModelScope.launch {
             userUseCases.changeUserMainInfoUseCase(
-                username = _username.value,
-                image = _selectedImage.value
+                userData = userData
             ).collect {
                 _changeMainInfoResponse.value = it
                 if (it is Response.Success) {
@@ -60,7 +63,8 @@ class EditProfileViewModel @Inject constructor(
         _username.value = username
     }
 
-    fun changeSelectedImage(image : String) {
+    fun changeSelectedImage(image : Uri?, imageFile : File?) {
         _selectedImage.value = image
+        selectedImageFile = imageFile
     }
 }
