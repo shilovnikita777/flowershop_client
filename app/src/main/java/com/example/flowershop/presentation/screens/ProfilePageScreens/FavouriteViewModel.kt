@@ -18,8 +18,6 @@ class FavouriteViewModel @Inject constructor(
     private val userDatastore: UserDatastore
 ) : ViewModel() {
 
-    private var _userId = NO_USER_CONSTANT
-
     private val _userFavouriteResponse = mutableStateOf<Response<User.Favourite>>(Response.Loading)
     val userFavouriteResponse : State<Response<User.Favourite>> = _userFavouriteResponse
 
@@ -27,32 +25,22 @@ class FavouriteViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != NO_USER_CONSTANT) {
-                    _userId = it
-                    getFavouriteByUserId()
-                }
-            }
+            getFavouriteByUserId()
         }
     }
 
     private suspend fun getFavouriteByUserId() {
-        if (_userId != NO_USER_CONSTANT) {
-            userUseCases.getFavouriteByUserIdUseCase(_userId).collect { favouriteResponse ->
-                if (favouriteResponse is Response.Success) {
-                    productsInFavourite = favouriteResponse.data.products.map {
-                        Triple(
-                            first = it,
-                            second = mutableStateOf<Response<Boolean>>(Response.Success(false)),
-                            third = mutableStateOf<Response<Boolean>>(Response.Success(false))
-                        )
-                    }.toMutableStateList()
-                }
-                _userFavouriteResponse.value = favouriteResponse
+        userUseCases.getFavouriteByUserIdUseCase().collect { favouriteResponse ->
+            if (favouriteResponse is Response.Success) {
+                productsInFavourite = favouriteResponse.data.products.map {
+                    Triple(
+                        first = it,
+                        second = mutableStateOf<Response<Boolean>>(Response.Success(false)),
+                        third = mutableStateOf<Response<Boolean>>(Response.Success(false))
+                    )
+                }.toMutableStateList()
             }
-        } else {
-            _userFavouriteResponse.value = Response.Error("Ошибка при идентификации пользователя")
-            //Log.d("xd",id.toString())
+            _userFavouriteResponse.value = favouriteResponse
         }
     }
 

@@ -54,16 +54,6 @@ abstract class ProductBaseViewModel (
     protected val _price = mutableStateOf(0)
     val price : State<Int> = _price
 
-    protected var userId = NO_USER_CONSTANT
-
-    init {
-        viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                userId = it
-            }
-        }
-    }
-
     protected abstract fun loadProduct(id: Int, type: String)
 
     protected abstract fun getDecorations()

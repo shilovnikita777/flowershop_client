@@ -92,7 +92,6 @@ class SignUpViewModel @Inject constructor(
                     password = _state.value.password.text
                 ).collect {
                     _signUpState.value = it
-                    //Log.d("xd1",it.toString())
                 }
             }
         }
@@ -145,11 +144,11 @@ class SignUpViewModel @Inject constructor(
         return isDataCorrect
     }
 
-    fun saveUserId(id: Int){
-        viewModelScope.launch {
-            userDatastore.saveUserId(id)
-        }
-    }
+//    fun saveUserId(id: Int){
+//        viewModelScope.launch {
+//            userDatastore.saveUserId(id)
+//        }
+//    }
 
     fun saveToken(token: String) {
         viewModelScope.launch {

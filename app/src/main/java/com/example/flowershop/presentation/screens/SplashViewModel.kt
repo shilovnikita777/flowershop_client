@@ -30,25 +30,19 @@ class SplashViewModel @Inject constructor(
     val isAuthResponse : State<Response<isAuthResponse>> = _isAuthResponse
 
     fun isUserAuthenticated() {
-        Log.d("xd3","start")
         job = viewModelScope.launch {
             tokenManager.getToken().collect { token ->
-                Log.d("xd3","try to login with token : $token")
-                authenticationUseCases.isUserAuthenticatedUseCase(token).collect { authResponse ->
-                    //Log.d("xd3",authResponse.toString() + "gederedx")
-                    _isAuthResponse.value = authResponse
-                    Log.d("xd3","auth resp value : $_isAuthResponse")
-                    if (authResponse is Response.Success) {
-                        userDatastore.saveUserId(authResponse.data.userId)
+                if (token != null) {
+                    authenticationUseCases.isUserAuthenticatedUseCase(token).collect { authResponse ->
+                        _isAuthResponse.value = authResponse
                     }
+                } else {
+                    _isAuthResponse.value = Response.Success(isAuthResponse(
+                        isAuth = false
+                    ))
                 }
             }
         }
-    }
-
-    fun unAuth() {
-        FirebaseAuth.getInstance().signOut()
-        Log.d("xd",FirebaseAuth.getInstance().currentUser?.uid ?: "user empty - 1.")
     }
 
     override fun onCleared() {

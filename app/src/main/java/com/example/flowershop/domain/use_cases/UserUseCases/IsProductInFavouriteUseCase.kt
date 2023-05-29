@@ -7,5 +7,5 @@ import javax.inject.Inject
 class IsProductInFavouriteUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(product: Product, userId: Int) = repository.isProductInFavourite(product, userId)
+    operator fun invoke(product: Product) = repository.isProductInFavourite(product)
 }

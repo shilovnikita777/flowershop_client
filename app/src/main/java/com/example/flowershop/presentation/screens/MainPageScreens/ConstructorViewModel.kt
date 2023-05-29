@@ -63,7 +63,7 @@ class ConstructorViewModel @Inject constructor(
 
         productId = savedStateHandle.get<Int>(ARGUMENT_PRODUCT_ID) ?: NO_PRODUCT_CONSTANT
         val productType = savedStateHandle.get<String>(ARGUMENT_PRODUCT_TYPE) ?: "product"
-        if (productId != NO_PRODUCT_CONSTANT && userId != Constants.NO_USER_CONSTANT) {
+        if (productId != NO_PRODUCT_CONSTANT) {
             loadProduct(productId, productType)
         }
         getDecorations()

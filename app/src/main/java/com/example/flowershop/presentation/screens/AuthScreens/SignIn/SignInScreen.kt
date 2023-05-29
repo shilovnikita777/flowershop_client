@@ -35,7 +35,7 @@ fun SignInScreen(navController: NavHostController) {
         is Response.Success -> {
             if (signInState.data != null) {
                 LaunchedEffect(key1 = true) {
-                    viewModel.saveUserId(signInState.data.userInfo.id)
+                    //viewModel.saveUserId(signInState.data.userInfo.id)
                     //viewModel.saveUserId(0)
                     viewModel.saveToken(signInState.data.token)
                     navController.popBackStack()

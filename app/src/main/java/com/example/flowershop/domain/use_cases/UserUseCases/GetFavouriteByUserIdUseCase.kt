@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetFavouriteByUserIdUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(id: Int) = repository.getFavouriteByUserId(id).map { response ->
+    operator fun invoke() = repository.getFavouriteByUserId().map { response ->
         when(response) {
             is Response.Loading -> {
                 response

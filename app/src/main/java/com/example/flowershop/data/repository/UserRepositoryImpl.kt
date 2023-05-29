@@ -11,10 +11,8 @@ import com.example.flowershop.presentation.model.UserEditInfo
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
@@ -22,7 +20,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userApiService : UserApiService
 ) : UserRepository {
-    override fun getBagByUserId(id: Int): Flow<Response<List<ProductWithCount>>> = apiRequestFlow {
+    override fun getUserBag(): Flow<Response<List<ProductWithCount>>> = apiRequestFlow {
         userApiService.getBag()
     }
 
@@ -38,7 +36,7 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.getAuthorBouquetById(id)
     }
 
-    override fun addProductToBag(product: ProductInBag, userId: Int) = apiRequestFlow {
+    override fun addProductToBag(product: ProductInBag) = apiRequestFlow {
         when (product.productWithCount.product.type) {
             "bouquet" -> {
                 if (product.productWithCount.product is Bouquet) {
@@ -61,7 +59,6 @@ class UserRepositoryImpl @Inject constructor(
 
             }
             "flower" -> {
-                //Log.d("xd7",product.productWithCount)
                 if (product.productWithCount is FlowersWithDecoration) {
                     val productToBagData = AddToBagRequest(
                         productId = product.productWithCount.product.id,
@@ -107,21 +104,21 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.removeFromBag(removeData)
     }
 
-    override fun isProductInFavourite(product: Product, userId: Int) = apiRequestFlow {
+    override fun isProductInFavourite(product: Product) = apiRequestFlow {
         userApiService.isProductInFavourite(product.id)
     }
 
-    override fun addProductToFavourite(product: Product, userId: Int) = apiRequestFlow {
+    override fun addProductToFavourite(product: Product) = apiRequestFlow {
         val productIdRequest = ProductIdRequest(product.id)
         userApiService.addToFavourite(productIdRequest)
     }
 
-    override fun removeProductFromFavourite(productId: Int, userId: Int) = apiRequestFlow {
+    override fun removeProductFromFavourite(productId: Int) = apiRequestFlow {
         val productIdRequest = ProductIdRequest(productId)
         userApiService.removeFromFavourite(productIdRequest)
     }
 
-    override fun getUsername(userId: Int) = apiRequestFlow {
+    override fun getUsername() = apiRequestFlow {
         userApiService.getUsername()
     }
 
@@ -138,11 +135,11 @@ class UserRepositoryImpl @Inject constructor(
         userApiService.changeProductInBagCount(changeCountData)
     }
 
-    override fun getFavouriteByUserId(userId: Int) = apiRequestFlow {
+    override fun getFavouriteByUserId() = apiRequestFlow {
         userApiService.getFavourite()
     }
 
-    override fun getUserMainInfo(userId: Int) = apiRequestFlow {
+    override fun getUserMainInfo() = apiRequestFlow {
         userApiService.getUserMainInfo()
     }
 
@@ -160,8 +157,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun updateProductInBag(
-        productWithCount: ProductWithCount,
-        userId: Int
+        productWithCount: ProductWithCount
     ) = apiRequestFlow {
         when (productWithCount.product.type) {
             "bouquet" -> {
@@ -211,8 +207,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun updateAuthorBouquetInBag(
-        productWithCount: ProductWithCount,
-        userId: Int
+        productWithCount: ProductWithCount
     ) = apiRequestFlow {
         val bouquet = productWithCount.product as Bouquet
         val updateProductInBagData = AddAuthorToBagRequest(

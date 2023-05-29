@@ -45,22 +45,12 @@ class HomeViewModel @Inject constructor(
     private val _promocodes = mutableStateOf<Response<List<PromocodeUI>>>(Response.Loading)
     val promocodes : State<Response<List<PromocodeUI>>> = _promocodes
 
-    private var userId = NO_USER_CONSTANT
-
     init {
         viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != NO_USER_CONSTANT) {
-                    userId = it
-                    Log.d("xd5","id: " + it)
-                    userUseCases.getUsernameUseCase(userId).collect {
-                        _username.value = it
-                    }
-                }
+            userUseCases.getUsernameUseCase().collect {
+                _username.value = it
             }
         }
-        Log.d("xd2","view model created ${this} ${userId}")
-
         getPopularProducts()
         getNewProducts()
         getPromocodes()

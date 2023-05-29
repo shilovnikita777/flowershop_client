@@ -38,8 +38,6 @@ class ProfileViewModel @Inject constructor(
     private val _deleteAccResponse = mutableStateOf<Response<Boolean>?>(null)
     val deleteAccResponse: State<Response<Boolean>?> = _deleteAccResponse
 
-    private var _userId = NO_USER_CONSTANT
-
     var isExitDialogShown by mutableStateOf(false)
         private set
 
@@ -48,18 +46,13 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != NO_USER_CONSTANT) {
-                    _userId = it
-                    getUserMainInfo()
-                }
-            }
+            getUserMainInfo()
         }
     }
 
     private fun getUserMainInfo() {
         viewModelScope.launch {
-            userUseCases.getUserMainInfoUseCase(_userId).map {
+            userUseCases.getUserMainInfoUseCase().map {
                 when (it) {
                     is Response.Loading -> {
                         it
@@ -86,11 +79,10 @@ class ProfileViewModel @Inject constructor(
     fun logout(onSuccess: () -> Unit) {
         viewModelScope.launch {
             tokenManager.getToken().collect {
-                authUseCases.logoutUseCase(it).collect {
+                authUseCases.logoutUseCase(it!!).collect {
                     _logoutResponse.value = it
-                    onSuccess()
                     if (it is Response.Success && it.data) {
-
+                        onSuccess()
                     }
                 }
             }

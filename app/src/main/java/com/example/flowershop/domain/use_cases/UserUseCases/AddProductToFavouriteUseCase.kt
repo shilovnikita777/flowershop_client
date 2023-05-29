@@ -8,5 +8,5 @@ import javax.inject.Inject
 class AddProductToFavouriteUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(product: Product, userId: Int) = repository.addProductToFavourite(product, userId)
+    operator fun invoke(product: Product) = repository.addProductToFavourite(product)
 }

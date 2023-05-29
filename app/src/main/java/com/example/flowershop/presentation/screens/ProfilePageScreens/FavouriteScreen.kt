@@ -212,7 +212,6 @@ fun FavouriteScreen(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProductsInFavourite(
     productsInFavourite: List<Triple<Product,MutableState<Response<Boolean>>,MutableState<Response<Boolean>>>>,
@@ -228,7 +227,7 @@ fun ProductsInFavourite(
         }
     }
     LazyColumn(
-        contentPadding = PaddingValues(top = 16.dp,bottom = 4.dp, start = 24.dp, end = 24.dp),
+        contentPadding = PaddingValues(top = 16.dp,bottom = 12.dp, start = 24.dp, end = 24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(productsInFavourite) { productInFavourite ->

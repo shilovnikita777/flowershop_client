@@ -43,31 +43,20 @@ class OrderInfoViewModel @Inject constructor(
     private val _state = mutableStateOf(OrderInfoStates())
     val state : State<OrderInfoStates> = _state
 
-    private var userId = Constants.NO_USER_CONSTANT
-
     init {
-        viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                userId = it
-                getBagByUserId()
-            }
-        }
+        getBagByUserId()
     }
 
     private fun getBagByUserId() {
-        if (userId != Constants.NO_USER_CONSTANT) {
-            viewModelScope.launch {
-                userUseCases.getBagByUserIdUseCase(userId).collect { bagResponse ->
-                    _userBagResponse.value = bagResponse
-                    if (bagResponse is Response.Success) {
-                        _state.value = _state.value.copy(
-                            orderSumm = bagResponse.data.total
-                        )
-                    }
+        viewModelScope.launch {
+            userUseCases.getBagByUserIdUseCase().collect { bagResponse ->
+                _userBagResponse.value = bagResponse
+                if (bagResponse is Response.Success) {
+                    _state.value = _state.value.copy(
+                        orderSumm = bagResponse.data.total
+                    )
                 }
             }
-        } else {
-            _userBagResponse.value = Response.Error("Ошибка при идентификации пользователя")
         }
     }
 
@@ -224,18 +213,6 @@ class OrderInfoViewModel @Inject constructor(
         }
 
         return isDataCorrect
-    }
-
-    fun saveUserId(id: Int){
-        viewModelScope.launch {
-            userDatastore.saveUserId(id)
-        }
-    }
-
-    fun saveToken(token: String) {
-        viewModelScope.launch {
-            tokenManager.saveToken(token)
-        }
     }
 
     private fun isPhoneValid(phone: String) : Boolean {

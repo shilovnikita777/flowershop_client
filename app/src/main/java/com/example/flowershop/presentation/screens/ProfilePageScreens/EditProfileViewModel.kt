@@ -34,18 +34,6 @@ class EditProfileViewModel @Inject constructor(
     private val _username = mutableStateOf("")
     val username : State<String> = _username
 
-    private var _userId = -1
-
-    init {
-        viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != Constants.NO_USER_CONSTANT) {
-                    _userId = it
-                }
-            }
-        }
-    }
-
     fun changeUserMainInfo(userData: UserEditInfo, onSuccess: () -> Unit) {
         viewModelScope.launch {
             userUseCases.changeUserMainInfoUseCase(

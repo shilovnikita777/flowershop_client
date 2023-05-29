@@ -68,11 +68,11 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun saveUserId(id: Int){
-        viewModelScope.launch {
-            userDatastore.saveUserId(id)
-        }
-    }
+//    fun saveUserId(id: Int){
+//        viewModelScope.launch {
+//            userDatastore.saveUserId(id)
+//        }
+//    }
 
     fun saveToken(token: String) {
         Log.d("xd3,","token to save : $token")

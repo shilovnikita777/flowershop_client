@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetBagByUserIdUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(id: Int) = repository.getBagByUserId(id).map { response ->
+    operator fun invoke() = repository.getUserBag().map { response ->
         when(response) {
             is Response.Loading -> {
                 response

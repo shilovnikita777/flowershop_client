@@ -16,7 +16,6 @@ fun<T> apiRequestFlow(call: suspend () -> retrofit2.Response<T>) : Flow<Response
     withTimeoutOrNull(10000L) {
         val response = call()
         try {
-            Log.d("xd3","raw response : ${response}")
             if (response.isSuccessful) {
                 response.body()?.let { data ->
                     emit(Response.Success(data))
@@ -26,12 +25,11 @@ fun<T> apiRequestFlow(call: suspend () -> retrofit2.Response<T>) : Flow<Response
                     error.close()
                     val parsedError: ErrorResponse = Gson().fromJson(error.charStream(),
                         ErrorResponse::class.java)
-                    Log.d("xd3","error :" + parsedError.message)
                     emit(Response.Error(parsedError.message))
                 }
             }
         } catch (e: Exception) {
             emit(Response.Error(e.localizedMessage ?: e.toString()))
         }
-    } ?: emit(Response.Error("Нет интернет соединения"))
+    } ?: emit(Response.Error("Нет связи с сервером"))
 }.flowOn(Dispatchers.IO)

@@ -7,5 +7,5 @@ import javax.inject.Inject
 class UpdateAuthorBouquetInBagUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(product: ProductWithCount, userId: Int) = repository.updateAuthorBouquetInBag(product, userId)
+    operator fun invoke(product: ProductWithCount) = repository.updateAuthorBouquetInBag(product)
 }

@@ -9,5 +9,5 @@ import javax.inject.Inject
 class AddProductToBagUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(product: ProductInBag, userId: Int) = repository.addProductToBag(product, userId)
+    operator fun invoke(product: ProductInBag) = repository.addProductToBag(product)
 }

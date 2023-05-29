@@ -35,63 +35,10 @@ class ProductViewModel @Inject constructor(
     init {
         val productId = savedStateHandle.get<Int>(ARGUMENT_PRODUCT_ID) ?: NO_PRODUCT_CONSTANT
         val productType = savedStateHandle.get<String>(ARGUMENT_PRODUCT_TYPE) ?: "product"
-        if (productId != NO_PRODUCT_CONSTANT && userId != NO_USER_CONSTANT) {
+        if (productId != NO_PRODUCT_CONSTANT) {
             loadProduct(productId,productType)
         }
     }
-
-//    init {
-//        viewModelScope.launch {
-//            userDatastore.getUserId.collect {
-//                if (it != NO_USER_CONSTANT) {
-//                    userId = it
-//                }
-//            }
-//        }
-//
-//        val productId = savedStateHandle.get<Int>(ARGUMENT_PRODUCT_ID) ?: NO_PRODUCT_CONSTANT
-//        getProductById(productId)
-//    }
-
-    //    private fun getProductById(id: Int) {
-//        if (id == NO_PRODUCT_CONSTANT || userId == NO_USER_CONSTANT) {
-//            _currentProductResponse.value = Response.Error("Unexpected Error")
-//        } else {
-//            viewModelScope.launch {
-//                productsUseCases.getProductByIdUseCase(id, userId).collect {
-//                    _currentProductResponse.value = it
-//                    if (it is Response.Success) {
-//                        _currentProduct.value = it.data
-//                        _count.value = _currentProduct.value.productWithCount.count.toString()
-//
-//                        if (it.data.productWithCount.product is Product.Flower) {
-//                            getDecorations()
-//
-//                            if (it.data.productWithCount is FlowersWithDecoration) {
-//                                Log.d("xd",it.data.productWithCount.decoration.title)
-//                                _selectedDecoration.value = it.data.productWithCount.decoration
-//                            }
-//
-//                            //_price.value = it.data.totalPrice
-//
-//                        } else if (it.data.productWithCount.product is Product.Bouquet) {
-//
-//                            getDecorations()
-//                            _selectedDecoration.value = (it.data.productWithCount.product as Product.Bouquet).decoration
-//
-//                            getTables()
-//                            _selectedTable.value = (it.data.productWithCount.product as Product.Bouquet).table
-//
-//                            _postcardMessage.value = (it.data.productWithCount.product as Product.Bouquet).postcard
-//                        }
-//
-//                        _price.value = it.data.totalPrice
-//                        Log.d("xd","PVM: ${it.data.totalPrice}")
-//                    }
-//                }
-//            }
-//        }
-//    }
     override fun loadProduct(id: Int, type: String) {
         viewModelScope.launch {
             productsUseCases.getProductByIdUseCase(id, type).collect {

@@ -24,85 +24,38 @@ class BagViewModel @Inject constructor(
     private val _userBagResponse = mutableStateOf<Response<User.Bag>>(Response.Loading)
     val userBagResponse : State<Response<User.Bag>> = _userBagResponse
 
-//    var productsInBag = mutableStateListOf<Triple<ProductWithCount<Product>,MutableState<Response<Boolean>>,MutableState<Response<Boolean>>>>()
-//
-//    private val _total = mutableStateOf(0)
-//    val total : State<Int> = _total
-
     private val _userBagState = UserBagState()
     val userBagState = _userBagState
-    
-//    private val _userBag = mutableStateOf(User.Bag())
-//    val userBag : State<User.Bag> = _userBag
-
-    private var userId = NO_USER_CONSTANT
 
     init {
-        viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != NO_USER_CONSTANT) {
-                    userId = it
-                    getBagByUserId()
-                }
-            }
-        }
+        getBagByUserId()
     }
 
-    fun getBagByUserId() {
-        if (userId != NO_USER_CONSTANT) {
-            viewModelScope.launch {
-                userUseCases.getBagByUserIdUseCase(userId).collect { bagResponse ->
-                    if (bagResponse is Response.Success) {
-                        //
-                        _userBagState.products = bagResponse.data.products.map {
-                            if (it.productWithCount.product is Bouquet) {
-                                Log.d("xd6","bouquet")
-                            } else if (it.productWithCount.product is Flower) {
-                                Log.d("xd6","flower")
-                            } else {
-                                Log.d("xd6","product")
-                            }
-                            Log.d("xd3", "price = ${it.productWithCount.product.price } count = ${it.productWithCount.count} totalPrice = ${it.totalPrice}")
-                            Triple(
-                                first = it,
-                                second = mutableStateOf<Response<Boolean>>(Response.Success(false)),
-                                third = mutableStateOf<Response<Boolean>>(Response.Success(false))
-                            )
-                        }.toMutableStateList()
-                        _userBagState.total.value = _userBagState.calculateTotal()
-                        //_userBagState.total.value = bagResponse.data.total
-                        //
-//                        productsInBag = bagResponse.data.products.map {
-//                            Triple(
-//                                first = it,
-//                                second = mutableStateOf<Response<Boolean>>(Response.Success(false)),
-//                                third = mutableStateOf<Response<Boolean>>(Response.Success(false))
-//                            )
-//                        }.toMutableStateList()
-
-                        //_total.value = bagResponse.data.total
-                    }
-                    _userBagResponse.value = bagResponse
+    private fun getBagByUserId() {
+        viewModelScope.launch {
+            userUseCases.getBagByUserIdUseCase().collect { bagResponse ->
+                if (bagResponse is Response.Success) {
+                    _userBagState.products = bagResponse.data.products.map {
+                        Triple(
+                            first = it,
+                            second = mutableStateOf<Response<Boolean>>(Response.Success(false)),
+                            third = mutableStateOf<Response<Boolean>>(Response.Success(false))
+                        )
+                    }.toMutableStateList()
+                    _userBagState.total.value = _userBagState.calculateTotal()
                 }
+                _userBagResponse.value = bagResponse
             }
-        } else {
-            _userBagResponse.value = Response.Error("Ошибка при идентификации пользователя")
         }
     }
 
     fun deleteProductFromLocalBag(productInBag: ProductInBag) {
-//        val e = productsInBag.find {
-//            it.first.product.id == product.product.id
-//        }
-//        productsInBag.remove(e)
-
         val e = _userBagState.products.find {
             it.first.productWithCount.product.id == productInBag.productWithCount.product.id
                     && it.first.productWithCount.product.name == productInBag.productWithCount.product.name
         }
         _userBagState.products.remove(e)
         _userBagState.total.value = _userBagState.calculateTotal()
-        //recalculateTotal()
     }
 
     fun changeCount(product: Triple<ProductInBag,MutableState<Response<Boolean>>,MutableState<Response<Boolean>>>, count: Int) {
@@ -121,10 +74,4 @@ class BagViewModel @Inject constructor(
             }
         }
     }
-
-//    fun recalculateTotal() {
-//        _total.value = productsInBag.sumOf {
-//            it.first.product.price * it.first.count
-//        }
-//    }
 }

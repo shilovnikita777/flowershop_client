@@ -4,16 +4,12 @@ import android.content.Context
 import com.example.flowershop.data.TestData
 import com.example.flowershop.data.TokenManager
 import com.example.flowershop.data.UserDatastore
-import com.example.flowershop.data.repository.ProductsRepositoryImpl
-import com.example.flowershop.data.repository.test.TestProductsRepositoryImpl
-import com.example.flowershop.data.repository.test.TestUserRepositoryImpl
 import com.example.flowershop.domain.repository.AuthenticationRepository
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.domain.repository.UserRepository
 import com.example.flowershop.domain.use_cases.AuthenticationUseCases.*
 import com.example.flowershop.domain.use_cases.ProductsUseCases.*
 import com.example.flowershop.domain.use_cases.UserUseCases.*
-import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

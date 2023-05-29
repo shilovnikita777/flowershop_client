@@ -18,26 +18,6 @@ class UserProductViewModel @Inject constructor(
     private val userDatastore: UserDatastore
 ) : ViewModel() {
 
-//    private val _userBag = mutableStateOf<Response<User.Bag>>(Response.Loading)
-//    val userBag : State<Response<User.Bag>> = _userBag
-//
-//    private val _userData = mutableStateOf<Response<User.Data>>(Response.Loading)
-//    val userData : State<Response<User.Data>> = _userData
-
-    private var userId = -1
-
-    init {
-        viewModelScope.launch {
-            userDatastore.getUserId.collect {
-                if (it != NO_USER_CONSTANT) {
-                    userId = it
-                }
-            }
-        }
-    }
-
-    fun getUserId() = userId
-
     fun isProductInBag(product: Product, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.isProductInBagUseCase(
@@ -63,8 +43,7 @@ class UserProductViewModel @Inject constructor(
             userUseCases.addProductToBagUseCase(
                 product = ProductInBag(
                     productWithCount = productWithCount
-                ),
-                userId = userId
+                )
             ).collect {
                 if (it is Response.Success) {
                     isProductInBag(productWithCount.product) {
@@ -103,8 +82,7 @@ class UserProductViewModel @Inject constructor(
     fun updateProductInBag(productWithCount: ProductWithCount, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.updateProductInBagUseCase(
-                product = productWithCount,
-                userId = userId
+                product = productWithCount
             ).collect {
                 if (it is Response.Success) {
                     isProductInBag(productWithCount.product) {
@@ -120,8 +98,7 @@ class UserProductViewModel @Inject constructor(
     fun updateAuthorBouquetInBag(productWithCount: ProductWithCount, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.updateAuthorBouquetInBagUseCase(
-                product = productWithCount,
-                userId = userId
+                product = productWithCount
             ).collect {
                 if (it is Response.Success) {
                     isAuthorBouquetInBag(productWithCount.product.id) {
@@ -168,8 +145,7 @@ class UserProductViewModel @Inject constructor(
     fun addProductToFavourite(product: Product, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.addProductToFavouriteUseCase(
-                product = product,
-                userId = userId
+                product = product
             ).collect {
                 if (it is Response.Success) {
                     isProductInFavourite(product) {
@@ -185,8 +161,7 @@ class UserProductViewModel @Inject constructor(
     fun removeProductFromFavourite(product: Product, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.removeProductFromFavouriteUseCase(
-                productId = product.id,
-                userId = userId
+                productId = product.id
             ).collect {
                 if (it is Response.Success) {
                     isProductInFavourite(product) {
@@ -203,8 +178,7 @@ class UserProductViewModel @Inject constructor(
     fun isProductInFavourite(product: Product, onValueChanged: (Response<Boolean>) -> Unit) {
         viewModelScope.launch {
             userUseCases.isProductInFavouriteUseCase(
-                product = product,
-                userId = userId
+                product = product
             ).collect {
                 onValueChanged(it)
             }

@@ -8,5 +8,5 @@ import javax.inject.Inject
 class UpdateProductInBagUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(product: ProductWithCount, userId: Int) = repository.updateProductInBag(product, userId)
+    operator fun invoke(product: ProductWithCount) = repository.updateProductInBag(product)
 }

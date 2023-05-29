@@ -6,5 +6,5 @@ import javax.inject.Inject
 class RemoveProductFromFavouriteUseCase @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(productId: Int, userId: Int) = repository.removeProductFromFavourite(productId, userId)
+    operator fun invoke(productId: Int) = repository.removeProductFromFavourite(productId)
 }

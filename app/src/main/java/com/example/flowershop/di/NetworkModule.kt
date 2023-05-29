@@ -59,8 +59,6 @@ object NetworkModule {
             .registerTypeAdapter(Image::class.java, ImageDeserializer())
             .registerTypeAdapter(Flower::class.java, FlowerSerializer())
             .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter().nullSafe())
-            //.registerTypeAdapter(Product::class.java, ProductTypeAdapter())
-            //.registerTypeAdapter(Product::class.java, ProductDeserializer())
             .create()
 
     @Singleton
@@ -72,7 +70,6 @@ object NetworkModule {
     @Provides
     fun provideMoshi() : Moshi =
         Moshi.Builder()
-            //.add(KotlinJsonAdapterFactory())
             .build()
 
     @Singleton
