@@ -29,9 +29,7 @@ class BouquetDeserializer : JsonDeserializer<Bouquet> {
         val description = jsonObject["description"].asString
         val type = jsonObject["type"].asString
         val categoriesIds = jsonObject["categoriesIds"]?.asJsonArray?.map { it.asInt } ?: emptyList()
-//        val flowers = jsonObject["flowers"].asJsonArray?.map {
-//            it.
-//        }
+
         val decoration = gson.fromJson(jsonObject["decoration"]?.asJsonObject, Decoration::class.java) ?: Decoration()
         val table = gson.fromJson(jsonObject["table"]?.asJsonObject, Table::class.java) ?: Table()
         val postcard = jsonObject["postcard"].asStringOrDefault("")

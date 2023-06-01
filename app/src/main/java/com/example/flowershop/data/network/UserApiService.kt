@@ -59,12 +59,12 @@ interface UserApiService {
     @GET("user/favourite")
     suspend fun getFavourite() : Response<MutableList<Product>>
 
-    @POST("user/updateproduct")
+    @PUT("user/updateproduct")
     suspend fun updateInBag(
         @Body updateProductInBagData : AddToBagRequest
     ) : Response<Boolean>
 
-    @POST("user/updateauthor")
+    @PUT("user/updateauthor")
     suspend fun updateAuthorInBag(
         @Body updateProductInBagData : AddAuthorToBagRequest
     ) : Response<Boolean>

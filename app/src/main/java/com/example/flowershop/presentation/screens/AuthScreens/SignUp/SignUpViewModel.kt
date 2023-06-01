@@ -1,15 +1,12 @@
 package com.example.flowershop.presentation.screens.AuthScreens.SignUp
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.example.flowershop.data.TokenManager
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import com.example.flowershop.util.Constants
 import com.example.flowershop.data.helpers.Response
-import com.example.flowershop.data.model.Request.RegisterRequest
 import com.example.flowershop.data.model.Response.RegisterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,12 +15,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authenticationUseCases: AuthenticationUseCases,
-    private val tokenManager : TokenManager,
-    private val userDatastore : UserDatastore
+    private val tokenManager : TokenManager
 ): ViewModel() {
 
-    private val _signUpState = mutableStateOf<Response<RegisterResponse?>>(Response.Success(null))
-    val signUpState : State<Response<RegisterResponse?>> = _signUpState
+    private val _signUpState = mutableStateOf<Response<RegisterResponse>?>(null)
+    val signUpState : State<Response<RegisterResponse>?> = _signUpState
 
     private val _state = mutableStateOf(SignUpStates())
     val state : State<SignUpStates> = _state
@@ -116,7 +112,7 @@ class SignUpViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 mail = _state.value.mail.copy(
                     isValid = false,
-                    msg = "Пожалуйста, введите корректную почту"
+                    msg = "Пожалуйста, введите почту согласно шаблону в поле"
                 )
             )
         }

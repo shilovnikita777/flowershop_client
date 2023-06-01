@@ -117,37 +117,51 @@ fun EditProfileScreen(
                     }
                 )
 
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp)
-                        .height(65.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.primaryVariant
-                    ),
-                    shape = RoundedCornerShape(56.dp),
-                    onClick = {
-                        editProfileViewModel.changeUserMainInfo(
-                            userData = UserEditInfo(
-                                username = editProfileViewModel.username.value,
-                                image = editProfileViewModel.selectedImageFile
-                            ),
-                            onSuccess = {
-                                navController.popBackStack()
-                                navController.navigate(Graph.PROFILE.route) {
-                                    launchSingleTop = true
-                                }
-                            }
-                        )
+                when(editProfileViewModel.changeMainInfoResponse.value) {
+                    is Response.Loading -> {
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 24.dp)
+                                .fillMaxWidth()
+                                .height(65.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(strokeWidth = 3.dp)
+                        }
                     }
-                ) {
-                    Text(
-                        text = "Сохранить",
-                        style = MaterialTheme.typography.h3,
-                        color = Color.White
-                    )
+                    else -> {
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 24.dp)
+                                .height(65.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.primaryVariant
+                            ),
+                            shape = RoundedCornerShape(56.dp),
+                            onClick = {
+                                editProfileViewModel.changeUserMainInfo(
+                                    userData = UserEditInfo(
+                                        username = editProfileViewModel.username.value,
+                                        image = editProfileViewModel.selectedImageFile
+                                    ),
+                                    onSuccess = {
+                                        navController.popBackStack()
+                                        navController.navigate(Graph.PROFILE.route) {
+                                            launchSingleTop = true
+                                        }
+                                    }
+                                )
+                            }
+                        ) {
+                            Text(
+                                text = "Сохранить",
+                                style = MaterialTheme.typography.h3,
+                                color = Color.White
+                            )
+                        }
+                    }
                 }
-
             }
         }
     }
@@ -221,7 +235,5 @@ fun ImageHolder(
                     .clip(CircleShape)
             )
         }
-
-
     }
 }

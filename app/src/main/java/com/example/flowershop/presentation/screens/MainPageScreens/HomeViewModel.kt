@@ -1,19 +1,16 @@
 package com.example.flowershop.presentation.screens.MainPageScreens
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.mapper.Mapper
 import com.example.flowershop.domain.model.Product
 import com.example.flowershop.domain.model.Promocode
 import com.example.flowershop.domain.use_cases.ProductsUseCases.ProductsUseCases
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.presentation.model.PromocodeUI
-import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
@@ -24,7 +21,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val productsUseCases: ProductsUseCases,
     private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore,
     private val mapper: Mapper<Promocode,PromocodeUI>
 ) : ViewModel() {
 

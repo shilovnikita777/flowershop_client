@@ -31,20 +31,28 @@ fun SignInScreen(navController: NavHostController) {
 
     val signInState = viewModel.signInState.value
 
-    when (signInState) {
-        is Response.Success -> {
-            if (signInState.data != null) {
-                LaunchedEffect(key1 = true) {
-                    //viewModel.saveUserId(signInState.data.userInfo.id)
-                    //viewModel.saveUserId(0)
-                    viewModel.saveToken(signInState.data.token)
-                    navController.popBackStack()
-                    navController.navigate(Graph.HOME.route)
-                }
-            }
-        }
-        else -> {
+//    when (signInState) {
+//        is Response.Success -> {
+//            if (signInState.data != null) {
+//                LaunchedEffect(key1 = true) {
+//                    //viewModel.saveUserId(signInState.data.userInfo.id)
+//                    //viewModel.saveUserId(0)
+//                    viewModel.saveToken(signInState.data.token)
+//                    navController.popBackStack()
+//                    navController.navigate(Graph.HOME.route)
+//                }
+//            }
+//        }
+//        else -> {
+//
+//        }
+//    }
 
+    if (signInState is Response.Success) {
+        LaunchedEffect(key1 = Unit) {
+            viewModel.saveToken(signInState.data.token)
+            navController.popBackStack()
+            navController.navigate(Graph.HOME.route)
         }
     }
 
@@ -77,8 +85,18 @@ fun SignInScreen(navController: NavHostController) {
             keyboardType = KeyboardType.Email,
             onValueChange = {
                 viewModel.onEvent(SignInEvents.EnterMail(it))
-            }
+            },
+            isError = !state.mail.isValid
         )
+        if (!state.mail.isValid) {
+            Text(
+                text = state.mail.msg.orEmpty(),
+                style = MaterialTheme.typography.subtitle1.copy(
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colors.onError
+                )
+            )
+        }
 
         Text(
             text = "Пароль",
@@ -96,8 +114,18 @@ fun SignInScreen(navController: NavHostController) {
             },
             onPasswordHiddenChange = {
                 viewModel.onEvent(SignInEvents.ChangePasswordVisibility(state.password.isPasswordHidden))
-            }
+            },
+            isError = !state.mail.isValid
         )
+        if (!state.password.isValid) {
+            Text(
+                text = state.password.msg.orEmpty(),
+                style = MaterialTheme.typography.subtitle1.copy(
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colors.onError
+                )
+            )
+        }
 
 //        Text(
 //            text = "Забыли пароль?",

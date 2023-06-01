@@ -159,6 +159,7 @@ class UserRepositoryImpl @Inject constructor(
     override fun updateProductInBag(
         productWithCount: ProductWithCount
     ) = apiRequestFlow {
+        delay(2000)
         when (productWithCount.product.type) {
             "bouquet" -> {
                 if (productWithCount.product is Bouquet) {

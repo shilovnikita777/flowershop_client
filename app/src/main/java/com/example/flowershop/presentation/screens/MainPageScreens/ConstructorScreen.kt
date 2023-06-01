@@ -78,7 +78,8 @@ fun ConstructorScreen(navController: NavHostController, productId: Int) {
         if (productResponse is Response.Success) {
             //constructorViewModel.changeProductInBagState(Response.Success(true))
             val isProductInBagResponse = constructorViewModel.isProductInBag.value
-            if (isProductInBagResponse is Response.Loading) {
+            LaunchedEffect(key1 = Unit) {
+                //Log.d("esp11",isProductInBagResponse.toString())
                 userProductViewModel.isAuthorBouquetInBag(
                     productId = productResponse.data.productWithCount.product.id,
                     onValueChanged = {
@@ -86,6 +87,14 @@ fun ConstructorScreen(navController: NavHostController, productId: Int) {
                     }
                 )
             }
+//            if (isProductInBagResponse is Response.Loading) {
+//                userProductViewModel.isAuthorBouquetInBag(
+//                    productId = productResponse.data.productWithCount.product.id,
+//                    onValueChanged = {
+//                        constructorViewModel.changeProductInBagState(it)
+//                    }
+//                )
+//            }
         } else {
             constructorViewModel.changeProductInBagState(Response.Success(false))
         }
@@ -504,10 +513,15 @@ fun BottomSheetContent(
 
         when (flowersResponse) {
             is Response.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(top = 24.dp)
+                    )
+                }
             }
             is Response.Error -> {
                 Text(

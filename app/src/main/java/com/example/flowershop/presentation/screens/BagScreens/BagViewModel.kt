@@ -1,13 +1,10 @@
 package com.example.flowershop.presentation.screens.BagScreens
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
 import com.example.flowershop.presentation.model.UserBagState
-import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_NAME
@@ -17,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BagViewModel @Inject constructor(
-    private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore
+    private val userUseCases: UserUseCases
 ) : ViewModel() {
 
     private val _userBagResponse = mutableStateOf<Response<User.Bag>>(Response.Loading)

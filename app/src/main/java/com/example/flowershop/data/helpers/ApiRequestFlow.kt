@@ -14,6 +14,7 @@ fun<T> apiRequestFlow(call: suspend () -> retrofit2.Response<T>) : Flow<Response
     emit(Response.Loading)
 
     withTimeoutOrNull(10000L) {
+        kotlinx.coroutines.delay(1000)
         val response = call()
         try {
             if (response.isSuccessful) {

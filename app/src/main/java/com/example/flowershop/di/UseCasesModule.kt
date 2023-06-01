@@ -1,9 +1,6 @@
 package com.example.flowershop.di
 
-import android.content.Context
 import com.example.flowershop.data.TestData
-import com.example.flowershop.data.TokenManager
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.repository.AuthenticationRepository
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.domain.repository.UserRepository
@@ -13,13 +10,12 @@ import com.example.flowershop.domain.use_cases.UserUseCases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FlowerAppModule {
+object UseCasesModule {
 
 //    @Singleton
 //    @Provides
@@ -106,19 +102,19 @@ object FlowerAppModule {
         usePromocodeUseCase = UsePromocodeUseCase(repository)
     )
 
-    @Singleton
-    @Provides
-    fun provideUserDatastore(
-        @ApplicationContext context: Context
-    ) : UserDatastore {
-        return UserDatastore(context)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideUserDatastore(
+//        @ApplicationContext context: Context
+//    ) : UserDatastore {
+//        return UserDatastore(context)
+//    }
 
-    @Singleton
-    @Provides
-    fun provideTokenManager(
-        @ApplicationContext context: Context
-    ) : TokenManager {
-        return TokenManager(context)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideTokenManager(
+//        @ApplicationContext context: Context
+//    ) : TokenManager {
+//        return TokenManager(context)
+//    }
 }

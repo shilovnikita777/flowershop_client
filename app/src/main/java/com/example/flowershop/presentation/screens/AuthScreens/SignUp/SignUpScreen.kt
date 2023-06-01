@@ -34,20 +34,27 @@ fun SignUpScreen(navController: NavHostController) {
 
     val signUpState = viewModel.signUpState.value
 
-    when (signUpState) {
-        is Response.Success -> {
-            if (signUpState.data != null) {
-                Log.d("xd",signUpState.data.toString())
-                LaunchedEffect(key1 = true) {
-                    //viewModel.saveUserId(signUpState.data.userInfo.id)
-                    viewModel.saveToken(signUpState.data.token)
-                    navController.popBackStack()
-                    navController.navigate(Graph.HOME.route)
-                }
-            }
-        }
-        else -> {
-
+//    when (signUpState) {
+//        is Response.Success -> {
+//            if (signUpState.data != null) {
+//                Log.d("xd",signUpState.data.toString())
+//                LaunchedEffect(key1 = true) {
+//                    //viewModel.saveUserId(signUpState.data.userInfo.id)
+//                    viewModel.saveToken(signUpState.data.token)
+//                    navController.popBackStack()
+//                    navController.navigate(Graph.HOME.route)
+//                }
+//            }
+//        }
+//        else -> {
+//
+//        }
+//    }
+    if (signUpState is Response.Success) {
+        LaunchedEffect(key1 = Unit) {
+            viewModel.saveToken(signUpState.data.token)
+            navController.popBackStack()
+            navController.navigate(Graph.HOME.route)
         }
     }
 
@@ -185,25 +192,32 @@ fun SignUpScreen(navController: NavHostController) {
             )
         }
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp)
-                .height(65.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.primaryVariant
-            ),
-            shape = RoundedCornerShape(56.dp),
-            enabled = (signUpState !is Response.Loading),
-            onClick = {
-                viewModel.signUp()
-            }
-        ) {
-            when (signUpState) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
+        when (signUpState) {
+            is Response.Loading -> {
+                Box(
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                        .fillMaxWidth()
+                        .height(65.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(strokeWidth = 3.dp)
                 }
-                else -> {
+            }
+            else -> {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp)
+                        .height(65.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primaryVariant
+                    ),
+                    shape = RoundedCornerShape(56.dp),
+                    onClick = {
+                        viewModel.signUp()
+                    }
+                ) {
                     Text(
                         text = "Зарегистрироваться",
                         style = MaterialTheme.typography.h3,

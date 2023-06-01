@@ -1,6 +1,5 @@
 package com.example.flowershop.di
 
-import com.example.flowershop.data.helpers.AuthInterceptor
 import com.example.flowershop.data.network.AuthApiService
 import com.example.flowershop.data.network.ProductsApiService
 import com.example.flowershop.data.network.UserApiService
@@ -9,7 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

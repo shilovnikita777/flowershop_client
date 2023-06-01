@@ -4,9 +4,7 @@ import android.net.Uri
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
-import com.example.flowershop.util.Constants
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.presentation.model.UserEditInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore
+    private val userUseCases: UserUseCases
 ) : ViewModel() {
 
     private val _selectedImage = mutableStateOf<Uri?>(null)
@@ -28,8 +25,8 @@ class EditProfileViewModel @Inject constructor(
 
     var isDataLoaded = false
 
-    private val _changeMainInfoResponse = mutableStateOf<Response<Boolean>>(Response.Loading)
-    val changeMainInfoResponse : State<Response<Boolean>> = _changeMainInfoResponse
+    private val _changeMainInfoResponse = mutableStateOf<Response<Boolean>?>(null)
+    val changeMainInfoResponse : State<Response<Boolean>?> = _changeMainInfoResponse
 
     private val _username = mutableStateOf("")
     val username : State<String> = _username

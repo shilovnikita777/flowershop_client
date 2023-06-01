@@ -11,7 +11,6 @@ import javax.annotation.Nullable
 open class Product(
     open var id: Int = -1,
     open val price: Int = 0,
-    open val rating: Rating = Rating(),
     open val image: Image = Image(""),
     open val name: String = "",
     open val description: String = "",

@@ -99,26 +99,25 @@ fun ProductScreen(
             )
         }
         is Response.Success -> {
-            if (isProductInBagResponse is Response.Loading) {
-                userProductViewModel.isProductInBag(
-                    product = productResponse.data.productWithCount.product,
-                    onValueChanged = {
-                        productViewModel.changeProductInBagState(it)
-                    }
-                )
+            LaunchedEffect(key1 = Unit) {
+//                Log.d("esp11",isProductInBagResponse.toString())
+                if (isProductInBagResponse is Response.Loading) {
+                    userProductViewModel.isProductInBag(
+                        product = productResponse.data.productWithCount.product,
+                        onValueChanged = {
+                            productViewModel.changeProductInBagState(it)
+                        }
+                    )
+                }
+                if (isProductInFavouriteResponse is Response.Loading) {
+                    userProductViewModel.isProductInFavourite(
+                        product = productResponse.data.productWithCount.product,
+                        onValueChanged = {
+                            productViewModel.changeProductInFavouriteState(it)
+                        }
+                    )
+                }
             }
-            if (isProductInFavouriteResponse is Response.Loading) {
-                userProductViewModel.isProductInFavourite(
-                    product = productResponse.data.productWithCount.product,
-                    onValueChanged = {
-                        productViewModel.changeProductInFavouriteState(it)
-                    }
-                )
-            }
-//            if (isProductInBagResponse is Response.Success
-//                && isProductInFavouriteResponse is Response.Success
-//            )
-//            {
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

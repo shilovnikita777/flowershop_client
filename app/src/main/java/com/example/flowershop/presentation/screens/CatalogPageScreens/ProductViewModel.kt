@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.use_cases.ProductsUseCases.ProductsUseCases
@@ -12,7 +11,6 @@ import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_ID
 import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_TYPE
 import com.example.flowershop.presentation.screens.MainPageScreens.ProductBaseViewModel
 import com.example.flowershop.util.Constants.NO_PRODUCT_CONSTANT
-import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,11 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(
     private val productsUseCases: ProductsUseCases,
-    private val userDatastore: UserDatastore,
     savedStateHandle: SavedStateHandle
 ) : ProductBaseViewModel(
     productsUseCases = productsUseCases,
-    userDatastore = userDatastore,
     savedStateHandle = savedStateHandle
 ){
 

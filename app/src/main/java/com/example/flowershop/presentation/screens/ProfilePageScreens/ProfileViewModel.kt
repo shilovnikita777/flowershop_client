@@ -7,16 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flowershop.data.TokenManager
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.model.User
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
-import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
-import com.example.flowershop.data.model.Response.UserMainInfoResponse
 import com.example.flowershop.domain.model.Image
 import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore,
     private val authUseCases : AuthenticationUseCases,
     private val tokenManager: TokenManager
 ) : ViewModel() {

@@ -6,7 +6,6 @@ import com.squareup.moshi.JsonClass
 data class Flower(
     override var id: Int = -1,
     override val price: Int = 0,
-    override val rating: Rating = Rating(),
     override val image: Image = Image(""),
     override val name: String = "",
     override val description: String = "",
@@ -14,4 +13,4 @@ data class Flower(
     override val type : String = "flower",
     val smallImage: Image = Image(""),
     val sort: String = ""
-) : Product(id,price,rating,image,name,description,categoriesIds,type)
+) : Product(id,price,image,name,description,categoriesIds,type)

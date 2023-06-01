@@ -3,35 +3,24 @@ package com.example.flowershop.presentation.screens.BagScreens.OrderInfo
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flowershop.data.TokenManager
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.data.helpers.Response
-import com.example.flowershop.data.model.Response.RegisterResponse
-import com.example.flowershop.domain.model.Bouquet
-import com.example.flowershop.domain.model.Flower
 import com.example.flowershop.domain.model.User
-import com.example.flowershop.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
-import com.example.flowershop.presentation.screens.AuthScreens.SignUp.SignUpEvents
-import com.example.flowershop.presentation.screens.AuthScreens.SignUp.SignUpStates
-import com.example.flowershop.util.Constants
 import com.example.flowershop.util.Constants.PHONE_LENGTH
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class OrderInfoViewModel @Inject constructor(
     private val userUseCases: UserUseCases,
-    private val tokenManager : TokenManager,
-    private val userDatastore : UserDatastore
+    private val tokenManager : TokenManager
 ): ViewModel() {
 
     private val _userBagResponse = mutableStateOf<Response<User.Bag>>(Response.Loading)

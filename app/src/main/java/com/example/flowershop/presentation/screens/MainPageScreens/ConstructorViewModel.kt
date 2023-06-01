@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.flowershop.R
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.use_cases.ProductsUseCases.ProductsUseCases
@@ -15,11 +14,8 @@ import com.example.flowershop.presentation.model.ProductWithCountState
 import com.example.flowershop.presentation.model.SearchConditions
 import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_ID
 import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_TYPE
-import com.example.flowershop.util.Constants
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_DESCRIPTION
-import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_ID
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_NAME
-import com.example.flowershop.util.Constants.FLOWERS_CATEGORY_ID
 import com.example.flowershop.util.Constants.NO_PRODUCT_CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -32,12 +28,10 @@ import javax.inject.Inject
 @HiltViewModel
 class ConstructorViewModel @Inject constructor(
     private val productsUseCases: ProductsUseCases,
-    private val userDatastore: UserDatastore,
     private val userUseCases: UserUseCases,
     savedStateHandle: SavedStateHandle
 ) : ProductBaseViewModel(
     productsUseCases = productsUseCases,
-    userDatastore = userDatastore,
     savedStateHandle = savedStateHandle
 ){
     private val _flowers = mutableStateOf<Response<List<Flower>>>(Response.Loading)
@@ -98,7 +92,6 @@ class ConstructorViewModel @Inject constructor(
                     }.toMutableStateList()
 
                     _price.value = it.data.totalPrice
-                    Log.d("xd", "PVM: ${it.data.totalPrice}")
                 }
             }
         }

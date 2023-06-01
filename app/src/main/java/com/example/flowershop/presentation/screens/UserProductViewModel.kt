@@ -1,21 +1,20 @@
 package com.example.flowershop.presentation.screens
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flowershop.data.UserDatastore
 import com.example.flowershop.domain.model.*
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
-import com.example.flowershop.util.Constants.NO_USER_CONSTANT
 import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.util.Constants.AUTHOR_BOUQUET_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserProductViewModel @Inject constructor(
     private val userUseCases: UserUseCases,
-    private val userDatastore: UserDatastore
 ) : ViewModel() {
 
     fun isProductInBag(product: Product, onValueChanged: (Response<Boolean>) -> Unit) {
@@ -84,6 +83,7 @@ class UserProductViewModel @Inject constructor(
             userUseCases.updateProductInBagUseCase(
                 product = productWithCount
             ).collect {
+//                Log.d("esp1",it.toString())
                 if (it is Response.Success) {
                     isProductInBag(productWithCount.product) {
                         onValueChanged(it)
