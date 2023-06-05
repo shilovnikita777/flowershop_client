@@ -487,7 +487,8 @@ fun ExitDialog(
                 Text(
                     text = "Вы уверены что хотите выйти?",
                     style = MaterialTheme.typography.subtitle1,
-                    color = MaterialTheme.colors.onBackground
+                    color = MaterialTheme.colors.onBackground,
+                    textAlign = TextAlign.Center
                 )
                 Image(
                     painter = painterResource(id = R.drawable.exit),
@@ -578,7 +579,7 @@ fun DeleteAccDialog(
                     textAlign = TextAlign.Center
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.exit),
+                    painter = painterResource(id = R.drawable.deleteacc),
                     contentDescription = "exit",
                     modifier = Modifier
                         .padding(top = 8.dp)

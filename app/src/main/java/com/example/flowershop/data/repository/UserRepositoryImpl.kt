@@ -250,7 +250,6 @@ class UserRepositoryImpl @Inject constructor(
         val data = PromocodeRequest(
             promo = promo
         )
-        delay(2000)
         userApiService.usePromocode(data)
     }
 }

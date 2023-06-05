@@ -22,9 +22,9 @@ fun AboutCompanyScreen() {
             color = MaterialTheme.colors.onBackground
         )
         Text(
-            text = "Данный проект представляет собой дипломную работу студента " +
-                    "ИКТИБ МОП ЭВМ КТбо4-7 Шилова Никиты Андреевича",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
+            text = "Данный проект представляет собой выпускную квалификационную работу студента " +
+                    "Института компьютерных технологий и информационной безопасности кафедры МОП ЭВМ гр. КТбо4-7 Шилова Никиты Андреевича",
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp)

@@ -64,7 +64,8 @@ object UseCasesModule {
         getDecorationsUseCase = GetDecorationsUseCase(repository),
         getTablesUseCase = GetTablesUseCase(repository),
         getFlowersUseCase = GetFlowersUseCase(repository),
-        getProductsUseCase = GetProductsUseCase(repository)
+        getProductsUseCase = GetProductsUseCase(repository),
+        getSortsUseCase = GetSortsUseCase(repository)
     )
 
 //    @Singleton

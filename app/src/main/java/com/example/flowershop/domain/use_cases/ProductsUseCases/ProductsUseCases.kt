@@ -11,5 +11,6 @@ data class ProductsUseCases(
     val getDecorationsUseCase: GetDecorationsUseCase,
     val getTablesUseCase: GetTablesUseCase,
     val getFlowersUseCase: GetFlowersUseCase,
-    val getProductsUseCase: GetProductsUseCase
+    val getProductsUseCase: GetProductsUseCase,
+    val getSortsUseCase: GetSortsUseCase
 )

@@ -23,7 +23,6 @@ object Constants {
     const val SERVER_PATH = "http://192.168.1.35:5000/"
 
     const val API_URL = "${SERVER_PATH}api/"
-    const val IMAGES_URL = "${SERVER_PATH}/images"
 
     const val API_STATUS_OK = 200
     const val API_STATUS_BAD_REQUEST = 400

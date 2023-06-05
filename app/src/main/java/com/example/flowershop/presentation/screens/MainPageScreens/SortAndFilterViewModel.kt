@@ -1,16 +1,26 @@
 package com.example.flowershop.presentation.screens.MainPageScreens
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.flowershop.data.helpers.Response
+import com.example.flowershop.domain.model.Sort
+import com.example.flowershop.domain.use_cases.ProductsUseCases.ProductsUseCases
 import com.example.flowershop.presentation.model.BouquetSize
 import com.example.flowershop.presentation.model.SearchConditions
 import com.example.flowershop.presentation.model.ListItem
 import com.example.flowershop.presentation.model.SortCriteria
 import com.example.flowershop.util.Constants
 import com.example.flowershop.util.Constants.NO_CATEGORY_CONSTANT
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-open class SortAndFilterViewModel (
+@HiltViewModel
+open class SortAndFilterViewModel @Inject constructor (
+    private val productsUseCases: ProductsUseCases
 ) : ViewModel() {
     var isFilterDialogShown by mutableStateOf(false)
         private set
@@ -18,16 +28,10 @@ open class SortAndFilterViewModel (
     var isSortDialogShown by mutableStateOf(false)
         private set
 
-    var sorts = mutableStateOf(listOf(ListItem("Розы"),
-        ListItem("Тюльпаны"),
-        ListItem("Ромашки"),
-        ListItem("Пионы"),
-        ListItem("Ирисы"),
-        ListItem("Хризантемы"),
-        ListItem("Гвоздики"),
-        ListItem("Альстромерии"),
-        ListItem("Маттиолы")
-    ))
+    private val _sortsResponse = mutableStateOf<Response<List<Sort>>>(Response.Loading)
+    val sortsResponse: State<Response<List<Sort>>> = _sortsResponse
+
+    var sorts = mutableStateOf(listOf<ListItem>())
         private set
 
     var sizes = listOf("Маленький", "Средний", "Большой", "Огромный")
@@ -42,6 +46,26 @@ open class SortAndFilterViewModel (
     val searchConditions : State<SearchConditions> = _searchConditions
 
     var searchJob = mutableStateOf<Job?>(null)
+
+    init {
+        getSorts()
+    }
+
+    private fun getSorts() {
+        viewModelScope.launch {
+            productsUseCases.getSortsUseCase().collect {
+                if (it is Response.Success) {
+                    sorts.value = it.data.map {
+                        ListItem(
+                            id = it.id,
+                            title = it.name
+                        )
+                    }
+                }
+                _sortsResponse.value = it
+            }
+        }
+    }
 
     fun onFilterClicked() {
         isFilterDialogShown = true

@@ -23,9 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
     private val productsUseCases: ProductsUseCases,
-    private val userUseCases: UserUseCases,
     savedStateHandle: SavedStateHandle
-) : SortAndFilterViewModel() {
+) : SortAndFilterViewModel(productsUseCases) {
 
     private val _currentProducts = mutableStateOf<Response<MutableList<Triple<Product, MutableState<Response<Boolean>>, MutableState<Response<Boolean>>>>>>(
         Response.Loading)

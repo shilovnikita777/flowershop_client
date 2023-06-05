@@ -1,8 +1,10 @@
 package com.example.flowershop.presentation.screens.ProfilePageScreens
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -467,11 +469,7 @@ fun ContactUs() {
                 modifier = Modifier
                     .size(36.dp)
                     .noRippleClickable {
-                        gmailIntent
-                            .resolveActivityInfo(context.packageManager, 0)
-                            ?.let {
-                                context.startActivity(gmailIntent)
-                            }
+                        context.openMail()
                     }
             )
         }

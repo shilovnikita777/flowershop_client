@@ -14,3 +14,8 @@ data class Flower(
     val smallImage: Image = Image(""),
     val sort: String = ""
 ) : Product(id,price,image,name,description,categoriesIds,type)
+
+data class Sort(
+    val id : Int,
+    val name : String
+)

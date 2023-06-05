@@ -59,9 +59,6 @@ interface ProductsApiService {
         @Query("sort") sort : String?,
     ) : Response<List<Product>>
 
-//    @GET("products/{id}")
-//    suspend fun getFlowerById(@Path("id") productId : Int) : Response<ProductWithCount>
-//
-//    @GET("products/{id}")
-//    suspend fun getBouquetById(@Path("id") productId : Int) : Response<ProductWithCount>
+    @GET("products/flowers/sorts")
+    suspend fun getSorts() : Response<List<Sort>>
 }

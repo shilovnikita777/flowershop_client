@@ -28,25 +28,6 @@ fun HomeNavGraph(nestedNavController: NavHostController, externalNavController: 
     }
 }
 
-//fun NavGraphBuilder.homeNavGraph(navController : NavHostController) {
-//    navigation(
-//        route = Graph.HOME.route,
-//        startDestination = BottomBarNavRoute.Home.route
-//    ) {
-//        mainNavGraph(navController = navController)
-//
-//        catalogNavGraph(navController = navController)
-//
-//        composable(
-//            route = BottomBarNavRoute.Bag.route
-//        ) {
-//            BagScreen(navController = navController)
-//        }
-//
-//        profileNavGraph(navController = navController)
-//    }
-//}
-
 sealed class BottomBarNavRoute(
     val route: String,
     val title: String,

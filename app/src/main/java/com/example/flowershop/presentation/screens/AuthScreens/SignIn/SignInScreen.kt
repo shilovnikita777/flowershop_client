@@ -31,23 +31,6 @@ fun SignInScreen(navController: NavHostController) {
 
     val signInState = viewModel.signInState.value
 
-//    when (signInState) {
-//        is Response.Success -> {
-//            if (signInState.data != null) {
-//                LaunchedEffect(key1 = true) {
-//                    //viewModel.saveUserId(signInState.data.userInfo.id)
-//                    //viewModel.saveUserId(0)
-//                    viewModel.saveToken(signInState.data.token)
-//                    navController.popBackStack()
-//                    navController.navigate(Graph.HOME.route)
-//                }
-//            }
-//        }
-//        else -> {
-//
-//        }
-//    }
-
     if (signInState is Response.Success) {
         LaunchedEffect(key1 = Unit) {
             viewModel.saveToken(signInState.data.token)
@@ -115,7 +98,7 @@ fun SignInScreen(navController: NavHostController) {
             onPasswordHiddenChange = {
                 viewModel.onEvent(SignInEvents.ChangePasswordVisibility(state.password.isPasswordHidden))
             },
-            isError = !state.mail.isValid
+            isError = !state.password.isValid
         )
         if (!state.password.isValid) {
             Text(
@@ -126,15 +109,6 @@ fun SignInScreen(navController: NavHostController) {
                 )
             )
         }
-
-//        Text(
-//            text = "Забыли пароль?",
-//            style = MaterialTheme.typography.subtitle1,
-//            color = MaterialTheme.colors.secondary,
-//            modifier = Modifier
-//                .padding(top = 6.dp)
-//                .align(Alignment.End)
-//        )
 
         Button(
             modifier = Modifier
@@ -163,30 +137,6 @@ fun SignInScreen(navController: NavHostController) {
                 }
             }
         }
-
-//        when (signInState) {
-//            is Response.Success -> {
-//                LaunchedEffect(key1 = true) {
-//                    navController.popBackStack()
-//                    navController.navigate(
-//                        Graph.HOME.passToken(
-//                            token = signInState.data
-//                        )
-//                    )
-//                }
-//            }
-//            is Response.Error -> {
-//                Text(
-//                    text = signInState.message,
-//                    style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
-//                    color = MaterialTheme.colors.onError,
-//                    modifier = Modifier.padding(top = 4.dp)
-//                )
-//            }
-//            else -> {
-//
-//            }
-//        }
         if (signInState is Response.Error) {
             Text(
                 text = signInState.message,

@@ -14,13 +14,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.flowershop.presentation.navigation.RootNavGraph
-import com.example.flowershop.presentation.screens.CatalogPageScreens.ProductsScreen
-import com.example.flowershop.screens.ConstructorScreen
-import com.example.flowershop.screens.ProductScreen
-import com.example.flowershop.presentation.screens.ProfilePageScreens.EditProfileScreen
-import com.example.flowershop.presentation.screens.ScaffoldScreen
-import com.example.flowershop.presentation.screens.SplashScreen
-import com.example.flowershop.presentation.screens.Test
 import com.example.flowershop.ui.theme.FlowerShopTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -54,7 +54,7 @@ class OrderInfoViewModel @Inject constructor(
             val promoResponse = _state.value.usePromoResponse
             val promocodeId = if (promoResponse is Response.Success)
                 promoResponse.data.id else null
-            Log.d("xd11",_state.value.usePromoResponse?.toString() ?: "")
+
             val order = User.Order(
                 products = (userBagResponse.value as Response.Success).data.products,
                 date = LocalDate.now(),

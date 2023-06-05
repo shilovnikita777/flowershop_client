@@ -95,34 +95,6 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
         when (promocodes) {
-//            is Response.Loading -> {
-//                LazyRow(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp),
-//                    contentPadding = PaddingValues(
-//                        start = 12.dp,
-//                        end = 12.dp
-//                    )
-//                ) {
-//                    items(3) {
-//                        DiscountCard()
-//                    }
-//                }
-//            }
-//            is Response.Success -> {
-//                LazyRow(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp),
-//                    contentPadding = PaddingValues(
-//                        start = 12.dp,
-//                        end = 12.dp
-//                    )
-//                ) {
-//                    items(newsBanners.data) {
-//                        DiscountCard(imageId = it.toInt())
-//                    }
-//                }
-//            }
             is Response.Error -> {
                 Text(
                     text = promocodes.message,
@@ -159,39 +131,12 @@ fun HomeScreen(navController: NavHostController) {
         }
 
         h2(
-            text = "Популярное",
+            text = "Может быть интересно",
             modifier = Modifier
                 .padding(top = 24.dp, start = 24.dp)
         )
 
         when (popularProducts) {
-//            is Response.Loading -> {
-//                LazyRow(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp),
-//                    contentPadding = PaddingValues(start = 24.dp, end = 16.dp),
-//                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    items(6) {
-//                        ProductBigCardPlaceholder()
-//                    }
-//                }
-//            }
-//            is Response.Success -> {
-//                LazyRow(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp),
-//                    contentPadding = PaddingValues(start = 24.dp, end = 16.dp),
-//                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    items(popularProducts.data) {
-//                        ProductBigCard(
-//                            product = it,
-//                            navController = navController
-//                        )
-//                    }
-//                }
-//            }
             is Response.Error -> {
                 Text(
                     text = popularProducts.message,
@@ -427,48 +372,6 @@ fun DiscountCard(promocodeUI: PromocodeUI? = null) {
         }
     }
 }
-
-@Composable
-fun FlowerCategoryCard(title: String, color: Color, imageId: Int) {
-    Column(
-        modifier = Modifier
-            .padding(start = 24.dp)
-            .width(75.dp)
-            .height(96.dp),
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(75.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(color),
-            contentAlignment = if (imageId != R.drawable.toulpan)
-                Alignment.Center
-            else
-                Alignment.BottomStart
-        ) {
-            Image(
-                painter = painterResource(imageId),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(if (imageId != R.drawable.toulpan) 55.dp else 75.dp)
-            )
-        }
-        Text(
-            text = title,
-            style = MaterialTheme.typography.subtitle1.copy(
-                fontSize = 12.sp
-            ),
-            color = MaterialTheme.colors.onBackground,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentHeight()
-        )
-    }
-}
-
-
 @Composable
 fun ProductBigCard(
     product: Triple<Product, MutableState<Response<Boolean>>, MutableState<Response<Boolean>>>,
@@ -515,15 +418,6 @@ fun ProductBigCard(
                 modifier = Modifier
                     .padding(top = 8.dp, start = 6.dp, end = 6.dp)
             ) {
-//                Text(
-//                    text = product.first.name,
-//                    style = MaterialTheme.typography.h3,
-//                    color = MaterialTheme.colors.onBackground,
-//                    maxLines = 2,
-//                    overflow = TextOverflow.Ellipsis,
-//                    modifier = Modifier
-//                        .height(42.dp)
-//                )
                 Row(
                     modifier = Modifier
                         .padding(top = 6.dp)
@@ -591,13 +485,6 @@ fun ProductBigCard(
 
                         }
                     }
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.heart
-//                            ),
-//                        contentDescription = ""
-//                    )
                 }
                 Row(
                     modifier = Modifier
@@ -712,134 +599,6 @@ fun ProductBigCard(
         }
     }
 }
-
-//@Composable
-//fun ProductBigCard(product: Product, navController: NavHostController) {
-//    Card(
-//        shape = RoundedCornerShape(10.dp),
-//        modifier = Modifier
-//            .width(221.dp)
-//            .clickable(
-//                interactionSource = remember { MutableInteractionSource() },
-//                indication = null
-//            ) {
-//                navController.navigate(CatalogNavRoute.Product.passId(product.id))
-//            },
-//        elevation = 2.dp
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .padding(all = 6.dp)
-//        ) {
-//
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    .data(product.image)
-//                    .build(),
-//                contentDescription = product.name,
-//                placeholder = painterResource(id = R.drawable.bouquet_placeholder),
-//                error = painterResource(id = R.drawable.bouquet_placeholder),
-//                onError = {
-//                    Log.d("xd", it.result.throwable.message!!)
-//                },
-//                contentScale = ContentScale.Crop,
-//                modifier = Modifier
-//                    .size(209.dp)
-//                    .clip(RoundedCornerShape(10.dp))
-//            )
-//
-//            Column(
-//                modifier = Modifier
-//                    .padding(top = 8.dp, start = 6.dp, end = 6.dp)
-//            ) {
-//                Text(
-//                    text = product.name,
-//                    style = MaterialTheme.typography.h3,
-//                    color = MaterialTheme.colors.onBackground,
-//                    maxLines = 2,
-//                    overflow = TextOverflow.Ellipsis,
-//                    modifier = Modifier
-//                        .height(42.dp)
-//                )
-//                Row(
-//                    modifier = Modifier
-//                        .padding(top = 6.dp)
-//                ) {
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.star
-//                            ),
-//                        contentDescription = "",
-//                        modifier = Modifier
-//                            .size(18.dp)
-//                    )
-//                    Text(
-//                        text = "${product.rating.value}",
-//                        style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
-//                        color = MaterialTheme.colors.onBackground,
-//                        modifier = Modifier
-//                            .padding(start = 4.dp)
-//                    )
-//                    Spacer(
-//                        modifier = Modifier
-//                            .weight(1f)
-//                    )
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.heart
-//                            ),
-//                        contentDescription = ""
-//                    )
-//                }
-//                Row(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp)
-//                ) {
-//                    Button(
-//                        modifier = Modifier
-//                            .width(110.dp)
-//                            .height(35.dp),
-//                        contentPadding = PaddingValues(0.dp),
-//                        colors = ButtonDefaults.buttonColors(
-//                            backgroundColor = MaterialTheme.colors.primaryVariant
-//                        ),
-//                        shape = RoundedCornerShape(6.dp),
-//                        onClick = {
-//
-//                        }
-//                    ) {
-//                        Text(
-//                            text = "В корзину",
-//                            style = MaterialTheme.typography.h3.copy(fontSize = 12.sp),
-//                            color = MaterialTheme.colors.background
-//                        )
-//                    }
-//                    Row(
-//                        horizontalArrangement = Arrangement.End,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .align(alignment = Alignment.CenterVertically)
-//                    ) {
-//                        Text(
-//                            text = "₽ ",
-//                            style = MaterialTheme.typography.h3.copy(fontSize = 18.sp),
-//                            color = MaterialTheme.colors.primaryVariant
-//
-//                        )
-//                        Text(
-//                            text = "${product.price}",
-//                            style = MaterialTheme.typography.h3.copy(fontSize = 18.sp),
-//                            color = MaterialTheme.colors.onBackground
-//                        )
-//                    }
-//
-//                }
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun ProductBigCardPlaceholder() {
@@ -1124,103 +883,6 @@ fun ProductSmallCard(
     }
 }
 
-//@Composable
-//fun ProductSmallCard(product: Product, navController: NavHostController) {
-//    Card(
-//        shape = RoundedCornerShape(10.dp),
-//        elevation = 2.dp,
-//        modifier = Modifier
-//            .clickable(
-//                interactionSource = remember { MutableInteractionSource() },
-//                indication = null
-//            ) {
-//                navController.navigate(CatalogNavRoute.Product.passId(product.id))
-//            }
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .padding(all = 6.dp)
-//        ) {
-//            BoxWithConstraints {
-//                AsyncImage(
-//                    model = ImageRequest.Builder(LocalContext.current)
-//                        .data(product.image)
-//                        .build(),
-//                    contentDescription = product.name,
-//                    placeholder = painterResource(id = R.drawable.bouquet_placeholder),
-//                    error = painterResource(id = R.drawable.escanor),
-//                    onError = {
-//                        Log.d("xd", it.result.throwable.message!!)
-//                    },
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(maxWidth)
-//                        .clip(RoundedCornerShape(10.dp))
-//                )
-//            }
-//            Column(
-//                modifier = Modifier
-//                    .padding(top = 8.dp, start = 6.dp, end = 6.dp)
-//            ) {
-//                Row {
-//                    Text(
-//                        text = product.name,
-//                        style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
-//                        color = MaterialTheme.colors.onBackground,
-//                        maxLines = 2,
-//                        overflow = TextOverflow.Ellipsis,
-//                        modifier = Modifier
-//                            .weight(1f)
-//                            .height(36.dp)
-//                            .padding(end = 8.dp)
-//                    )
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.heart
-//                            ),
-//                        contentDescription = "",
-//                        modifier = Modifier
-//                            .width(16.dp)
-//                    )
-//                }
-//                Row(
-//                    modifier = Modifier
-//                        .padding(top = 4.dp)
-//                ) {
-//                    Row {
-//                        Text(
-//                            text = "₽ ",
-//                            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
-//                            color = MaterialTheme.colors.primaryVariant
-//
-//                        )
-//                        Text(
-//                            text = "${product.price}",
-//                            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
-//                            color = MaterialTheme.colors.onBackground
-//                        )
-//                    }
-//                    Spacer(
-//                        modifier = Modifier
-//                            .weight(1f)
-//                    )
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.buy_selected
-//                            ),
-//                        contentDescription = "",
-//                        modifier = Modifier
-//                            .size(18.dp)
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
-
 @Composable
 fun ProductSmallCardPlaceholder() {
     Card(
@@ -1266,15 +928,6 @@ fun ProductSmallCardPlaceholder() {
                             .clip(RoundedCornerShape(3.dp))
                             .background(MaterialTheme.colors.onSurface)
                     )
-//                    Image(
-//                        imageVector = ImageVector
-//                            .vectorResource(
-//                                id = R.drawable.heart
-//                            ),
-//                        contentDescription = "like",
-//                        modifier = Modifier
-//                            .width(16.dp)
-//                    )
                 }
                 Row(
                     modifier = Modifier

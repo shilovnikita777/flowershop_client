@@ -165,6 +165,13 @@ fun ProductScreen(
                     modifier = Modifier
                         .padding(top = 16.dp)
                 )
+                if (productInBag.productWithCount.product is Flower) {
+                    Sort(sort = (productInBag.productWithCount.product as Flower).sort)
+                    Separator(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                    )
+                }
                 if (productInBag.productWithCount.product is Bouquet) {
                     Size(bouquetSize = (productInBag.productWithCount.product as Bouquet).size)
                     Separator(
@@ -308,6 +315,48 @@ fun Size(bouquetSize: BouquetSize) {
             }
             Text(
                 text = size,
+                style = MaterialTheme.typography.subtitle1.copy(
+                    fontSize = 16.sp
+                ),
+                color = MaterialTheme.colors.onBackground,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            )
+        }
+    }
+
+}
+
+@Composable
+fun Sort(sort: String) {
+    Text(
+        text = "Сорт цветка",
+        style = MaterialTheme.typography.h3.copy(fontSize = 20.sp),
+        color = MaterialTheme.colors.onBackground,
+        modifier = Modifier
+            .padding(top = 16.dp, start = 24.dp)
+    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .padding(top = 12.dp, start = 16.dp)
+            .height(75.dp)
+            //.border(width = 1.dp, color = MaterialTheme.colors.onBackground)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 8.dp)
+        ) {
+            Image(
+                painterResource(id = R.drawable.flowersort),
+                contentDescription = "flower sort",
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .size(48.dp)
+            )
+            Text(
+                text = sort,
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 16.sp
                 ),

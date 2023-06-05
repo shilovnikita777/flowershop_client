@@ -47,16 +47,18 @@ fun OrderInfoScreen(navController: NavHostController) {
 
     val state = viewModel.state.value
 
+    val makeOrderResponse = viewModel.makeOrderResponse.value
+
     Box(
         modifier = Modifier
-            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         when (userBagResponse) {
             is Response.Loading -> {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 500.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -70,7 +72,6 @@ fun OrderInfoScreen(navController: NavHostController) {
                 )
             }
             is Response.Success -> {
-                Log.d("xd11", state.toString())
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -204,7 +205,7 @@ fun OrderInfoScreen(navController: NavHostController) {
                             )
                         }
                     ) {
-                        when (viewModel.makeOrderResponse.value) {
+                        when (makeOrderResponse) {
                             is Response.Loading -> {
                                 CircularProgressIndicator()
                             }
@@ -216,6 +217,15 @@ fun OrderInfoScreen(navController: NavHostController) {
                                 )
                             }
                         }
+                    }
+                    if (makeOrderResponse is Response.Error) {
+                        Text(
+                            text = makeOrderResponse.message,
+                            style = MaterialTheme.typography.subtitle1.copy(
+                                fontSize = 12.sp,
+                                color = MaterialTheme.colors.onError
+                            )
+                        )
                     }
 
 //                    if (signUpState is Response.Error) {

@@ -1,10 +1,13 @@
 package com.example.flowershop.data.repository
 
+import com.example.flowershop.data.helpers.Response
 import com.example.flowershop.data.helpers.apiRequestFlow
 import com.example.flowershop.data.network.ProductsApiService
+import com.example.flowershop.domain.model.Sort
 import com.example.flowershop.domain.repository.ProductsRepository
 import com.example.flowershop.presentation.model.SearchConditions
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProductsRepositoryImpl @Inject constructor(
@@ -66,5 +69,9 @@ class ProductsRepositoryImpl @Inject constructor(
             search = searchConditions.search,
             sort = searchConditions.sortCriteria?.value
         )
+    }
+
+    override fun getSorts() = apiRequestFlow {
+        productsApiService.getSorts()
     }
 }

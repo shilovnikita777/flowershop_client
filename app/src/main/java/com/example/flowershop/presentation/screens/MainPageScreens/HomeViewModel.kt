@@ -32,9 +32,6 @@ class HomeViewModel @Inject constructor(
         Response.Loading)
     val newProducts: State<Response<MutableList<Triple<Product, MutableState<Response<Boolean>>, MutableState<Response<Boolean>>>>>> = _newProducts
 
-//    private val _newProducts = mutableStateOf<Response<List<Product>>>(Response.Loading)
-//    val newProducts: State<Response<List<Product>>> = _newProducts
-
     private val _username = mutableStateOf<Response<String>>(Response.Loading)
     val username : State<Response<String>> = _username
 
@@ -56,16 +53,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             productsUseCases.getPopularProductsUseCase().collect { response ->
                 _popularProducts.value = response
-//                 if (response is Response.Success) {
-//                     response.data.forEach { product ->
-//                        isProductInBag(product.first) {
-//                            product.second.value = it
-//                        }
-//                        isProductInFavourite(product.first) {
-//                            product.third.value = it
-//                        }
-//                    }
-//                }
             }
         }
     }
@@ -74,16 +61,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             productsUseCases.getNewProductsUseCase().collect { response ->
                 _newProducts.value = response
-//                if (response is Response.Success) {
-//                    response.data.forEach { product ->
-//                        isProductInBag(product.first) {
-//                            product.second.value = it
-//                        }
-//                        isProductInFavourite(product.first) {
-//                            product.third.value = it
-//                        }
-//                    }
-//                }
             }
         }
     }

@@ -95,14 +95,7 @@ class SignInViewModel @Inject constructor(
         return isDataCorrect
     }
 
-//    fun saveUserId(id: Int){
-//        viewModelScope.launch {
-//            userDatastore.saveUserId(id)
-//        }
-//    }
-
     fun saveToken(token: String) {
-        Log.d("xd3,","token to save : $token")
         viewModelScope.launch {
             tokenManager.saveToken(token)
         }

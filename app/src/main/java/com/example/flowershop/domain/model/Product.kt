@@ -1,12 +1,5 @@
 package com.example.flowershop.domain.model
 
-import android.util.Log
-import com.example.flowershop.util.Constants.IMAGES_URL
-import com.google.gson.annotations.JsonAdapter
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import javax.annotation.Nullable
-
 
 open class Product(
     open var id: Int = -1,

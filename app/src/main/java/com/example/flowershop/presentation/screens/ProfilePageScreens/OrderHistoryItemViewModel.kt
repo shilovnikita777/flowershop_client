@@ -13,7 +13,7 @@ import com.example.flowershop.domain.model.ProductInBag
 import com.example.flowershop.domain.model.ProductWithCount
 import com.example.flowershop.domain.model.User
 import com.example.flowershop.domain.use_cases.UserUseCases.UserUseCases
-import com.example.flowershop.presentation.navigation.ARGUMENT_PRODUCT_ID
+import com.example.flowershop.presentation.navigation.ARGUMENT_ORDER_ID
 import com.example.flowershop.util.Constants
 import com.example.flowershop.util.Constants.NO_ORDER_CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +30,7 @@ class OrderHistoryItemViewModel @Inject constructor(
     val order : State<Response<OrderResponse>> = _order
 
     init {
-        val orderId = savedStateHandle.get<Int>(ARGUMENT_PRODUCT_ID) ?: NO_ORDER_CONSTANT
+        val orderId = savedStateHandle.get<Int>(ARGUMENT_ORDER_ID) ?: NO_ORDER_CONSTANT
         if (orderId != NO_ORDER_CONSTANT) {
             getOrder(orderId)
         } else {

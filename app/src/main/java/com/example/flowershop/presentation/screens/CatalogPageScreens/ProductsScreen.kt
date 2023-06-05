@@ -92,7 +92,7 @@ fun ProductsScreen(
             is Response.Error -> {
                 Text(
                     text = products.message,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colors.onError,
                     style = MaterialTheme.typography.h4,
                     modifier = Modifier
                         .padding(top = 12.dp)
@@ -336,238 +336,262 @@ fun FilterDialog(
             }
         },
         properties = DialogProperties(
-            usePlatformDefaultWidth = true
+            usePlatformDefaultWidth = false
         )
     ) {
         Card(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
-                .fillMaxWidth(0.95f)
+                .fillMaxWidth(0.9f)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 24.dp)
-            ) {
-                Text(
-                    text = "Цена",
-                    style = MaterialTheme.typography.h4.copy(
-                        fontSize = 16.sp
-                    ),
-                    color = MaterialTheme.colors.onBackground
-                )
-                Row(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                ) {
-                    OutlinedTextField(
-                        value = viewModel.searchConditions.value.minPrice?.toString() ?: "",
-                        onValueChange = {
-                            viewModel.changeMinPrice(viewModel.changePrice(it))
-                        },
-                        shape = RoundedCornerShape(15.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Decimal
-                        ),
-                        keyboardActions = KeyboardActions(
-
-                        ),
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.subtitle1
-                            .copy(
-                                color = MaterialTheme.colors.onSecondary,
-                                fontWeight = FontWeight.Medium
-                            ),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            backgroundColor = MaterialTheme.colors.secondaryVariant,
-                            errorBorderColor = MaterialTheme.colors.onError,
-                            cursorColor = MaterialTheme.colors.onBackground,
-                            unfocusedBorderColor = Color.Transparent,
-                            focusedBorderColor = Color.Transparent,
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "От",
-                                style = MaterialTheme.typography.subtitle1,
-                                color = MaterialTheme.colors.secondary,
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                            )
-                        },
+            when (val response = viewModel.sortsResponse.value) {
+                is Response.Loading -> {
+                    Box(
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(50.dp)
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = viewModel.searchConditions.value.maxPrice?.toString() ?: "",
-                        onValueChange = {
-                            viewModel.changeMaxPrice(viewModel.changePrice(it))
-                        },
-                        shape = RoundedCornerShape(15.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Decimal
-                        ),
-                        keyboardActions = KeyboardActions(
-
-                        ),
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.subtitle1
-                            .copy(
-                                color = MaterialTheme.colors.onSecondary,
-                                fontWeight = FontWeight.Medium
-                            ),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            backgroundColor = MaterialTheme.colors.secondaryVariant,
-                            errorBorderColor = MaterialTheme.colors.onError,
-                            cursorColor = MaterialTheme.colors.onBackground,
-                            unfocusedBorderColor = Color.Transparent,
-                            focusedBorderColor = Color.Transparent,
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "До",
-                                style = MaterialTheme.typography.subtitle1,
-                                color = MaterialTheme.colors.secondary,
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                            )
-                        },
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(50.dp)
-                    )
-                }
-                Text(
-                    text = "Товары, включающие",
-                    style = MaterialTheme.typography.h4.copy(
-                        fontSize = 16.sp
-                    ),
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                )
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 8.dp,
-                            top = 8.dp
-                        )
-                ) {
-                    items(viewModel.sorts.value.size) { index ->
-                        Row(
-                            modifier = Modifier
-                                .noRippleClickable {
-                                    viewModel.updateSortsList(
-                                        viewModel.sorts.value.mapIndexed{ j, item ->
-                                            if (index == j) {
-                                                item.copy(isSelected = !item.isSelected)
-                                            } else item
-                                        }
-                                    )
-                                }
-                        ) {
-                            Log.d("xd111", viewModel.sorts.value[index].title + " " + viewModel.sorts.value[index].isSelected)
-                            var icon = R.drawable.check_false
-                            if (viewModel.sorts.value[index].isSelected)
-                                icon = R.drawable.check_true
-                            Image(
-                                imageVector = ImageVector.vectorResource(id = icon),
-                                contentDescription = "icon",
-                                modifier = Modifier
-                                    .size(20.dp)
-                            )
-                            Text(
-                                text = viewModel.sorts.value[index].title,
-                                style = MaterialTheme.typography.h4,
-                                color = MaterialTheme.colors.onBackground,
-                                modifier = Modifier
-                                    .padding(start = 12.dp)
-                                    .align(Alignment.CenterVertically)
-                            )
-                        }
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(strokeWidth = 3.dp)
                     }
                 }
-                if (areBouquetsAvailable) {
+                is Response.Error -> {
                     Text(
-                        text = "Размер букета",
-                        style = MaterialTheme.typography.h4.copy(
-                            fontSize = 16.sp
-                        ),
-                        color = MaterialTheme.colors.onBackground,
+                        text = response.message,
+                        color = MaterialTheme.colors.onError,
+                        style = MaterialTheme.typography.h4,
                         modifier = Modifier
                             .padding(top = 12.dp)
                     )
+                }
+                is Response.Success -> {
                     Column(
                         modifier = Modifier
-                            .padding(
-                                start = 16.dp,
-                                end = 8.dp
-                            )
-                            .selectableGroup()
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp, horizontal = 24.dp)
+                            .defaultMinSize(minWidth = 100.dp)
                     ) {
-                        viewModel.sizes.forEach {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                    .selectable(
-                                        selected = viewModel.isSizeChosen(it),
-                                        onClick = {
-                                            viewModel.changeSize(it)
-                                        },
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = null,
-                                        role = Role.RadioButton
-                                    )
-                            ) {
-                                RadioButton(
-                                    selected = viewModel.isSizeChosen(it),
-                                    colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.onBackground,
-                                        unselectedColor = Color.DarkGray,
-                                        disabledColor = Color.LightGray
+                        Text(
+                            text = "Цена",
+                            style = MaterialTheme.typography.h4.copy(
+                                fontSize = 16.sp
+                            ),
+                            color = MaterialTheme.colors.onBackground
+                        )
+                        Row(
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = viewModel.searchConditions.value.minPrice?.toString() ?: "",
+                                onValueChange = {
+                                    viewModel.changeMinPrice(viewModel.changePrice(it))
+                                },
+                                shape = RoundedCornerShape(15.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Decimal
+                                ),
+                                keyboardActions = KeyboardActions(
+
+                                ),
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.subtitle1
+                                    .copy(
+                                        color = MaterialTheme.colors.onSecondary,
+                                        fontWeight = FontWeight.Medium
                                     ),
-                                    onClick = null
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    backgroundColor = MaterialTheme.colors.secondaryVariant,
+                                    errorBorderColor = MaterialTheme.colors.onError,
+                                    cursorColor = MaterialTheme.colors.onBackground,
+                                    unfocusedBorderColor = Color.Transparent,
+                                    focusedBorderColor = Color.Transparent,
+                                ),
+                                placeholder = {
+                                    Text(
+                                        text = "От",
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = MaterialTheme.colors.secondary,
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                    )
+                                },
+                                modifier = Modifier
+                                    .width(100.dp)
+                                    .height(50.dp)
+                            )
+                            Spacer(
+                                modifier = Modifier
+                                    .weight(1f)
+                            )
+                            OutlinedTextField(
+                                value = viewModel.searchConditions.value.maxPrice?.toString() ?: "",
+                                onValueChange = {
+                                    viewModel.changeMaxPrice(viewModel.changePrice(it))
+                                },
+                                shape = RoundedCornerShape(15.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Decimal
+                                ),
+                                keyboardActions = KeyboardActions(
+
+                                ),
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.subtitle1
+                                    .copy(
+                                        color = MaterialTheme.colors.onSecondary,
+                                        fontWeight = FontWeight.Medium
+                                    ),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    backgroundColor = MaterialTheme.colors.secondaryVariant,
+                                    errorBorderColor = MaterialTheme.colors.onError,
+                                    cursorColor = MaterialTheme.colors.onBackground,
+                                    unfocusedBorderColor = Color.Transparent,
+                                    focusedBorderColor = Color.Transparent,
+                                ),
+                                placeholder = {
+                                    Text(
+                                        text = "До",
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = MaterialTheme.colors.secondary,
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                    )
+                                },
+                                modifier = Modifier
+                                    .width(100.dp)
+                                    .height(50.dp)
+                            )
+                        }
+                        Text(
+                            text = "Товары, включающие",
+                            style = MaterialTheme.typography.h4.copy(
+                                fontSize = 16.sp
+                            ),
+                            color = MaterialTheme.colors.onBackground,
+                            modifier = Modifier
+                                .padding(top = 12.dp)
+                        )
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier
+                                .padding(
+                                    start = 16.dp,
+                                    end = 8.dp,
+                                    top = 8.dp
                                 )
-                                Text(
-                                    text = it,
-                                    style = MaterialTheme.typography.h4,
-                                    color = MaterialTheme.colors.onBackground,
+                        ) {
+                            items(viewModel.sorts.value.size) { index ->
+                                Row(
                                     modifier = Modifier
-                                        .padding(start = 12.dp)
-                                )
+                                        .noRippleClickable {
+                                            viewModel.updateSortsList(
+                                                viewModel.sorts.value.mapIndexed{ j, item ->
+                                                    if (index == j) {
+                                                        item.copy(isSelected = !item.isSelected)
+                                                    } else item
+                                                }
+                                            )
+                                        }
+                                ) {
+                                    Log.d("xd111", viewModel.sorts.value[index].title + " " + viewModel.sorts.value[index].isSelected)
+                                    var icon = R.drawable.check_false
+                                    if (viewModel.sorts.value[index].isSelected)
+                                        icon = R.drawable.check_true
+                                    Image(
+                                        imageVector = ImageVector.vectorResource(id = icon),
+                                        contentDescription = "icon",
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                    Text(
+                                        text = viewModel.sorts.value[index].title,
+                                        style = MaterialTheme.typography.h4,
+                                        color = MaterialTheme.colors.onBackground,
+                                        modifier = Modifier
+                                            .padding(start = 12.dp)
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
                             }
                         }
+                        if (areBouquetsAvailable) {
+                            Text(
+                                text = "Размер букета",
+                                style = MaterialTheme.typography.h4.copy(
+                                    fontSize = 16.sp
+                                ),
+                                color = MaterialTheme.colors.onBackground,
+                                modifier = Modifier
+                                    .padding(top = 12.dp)
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 8.dp
+                                    )
+                                    .selectableGroup()
+                            ) {
+                                viewModel.sizes.forEach {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier
+                                            .padding(top = 8.dp)
+                                            .selectable(
+                                                selected = viewModel.isSizeChosen(it),
+                                                onClick = {
+                                                    viewModel.changeSize(it)
+                                                },
+                                                interactionSource = remember { MutableInteractionSource() },
+                                                indication = null,
+                                                role = Role.RadioButton
+                                            )
+                                    ) {
+                                        RadioButton(
+                                            selected = viewModel.isSizeChosen(it),
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = MaterialTheme.colors.onBackground,
+                                                unselectedColor = Color.DarkGray,
+                                                disabledColor = Color.LightGray
+                                            ),
+                                            onClick = null
+                                        )
+                                        Text(
+                                            text = it,
+                                            style = MaterialTheme.typography.h4,
+                                            color = MaterialTheme.colors.onBackground,
+                                            modifier = Modifier
+                                                .padding(start = 12.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        Button(
+                            contentPadding = PaddingValues(8.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.onSecondary
+                            ),
+                            elevation = ButtonDefaults.elevation(
+                                defaultElevation = 0.dp,
+                                pressedElevation = 4.dp
+                            ),
+                            //border = BorderStroke(1.dp,MaterialTheme.colors.onBackground),
+                            modifier = Modifier
+                                .padding(top = 16.dp),
+                            onClick = {
+                                viewModel.clearFilters()
+                            }
+                        ) {
+                            Text(
+                                text = "Сбросить фильтры",
+                                style = MaterialTheme.typography.subtitle1,
+                                color = MaterialTheme.colors.background
+                            )
+                        }
                     }
-                }
-                Button(
-                    contentPadding = PaddingValues(8.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.onSecondary
-                    ),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 4.dp
-                    ),
-                    //border = BorderStroke(1.dp,MaterialTheme.colors.onBackground),
-                    modifier = Modifier
-                        .padding(top = 16.dp),
-                    onClick = {
-                        viewModel.clearFilters()
-                    }
-                ) {
-                    Text(
-                        text = "Сбросить фильтры",
-                        style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.background
-                    )
                 }
             }
         }

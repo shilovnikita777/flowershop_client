@@ -34,22 +34,6 @@ fun SignUpScreen(navController: NavHostController) {
 
     val signUpState = viewModel.signUpState.value
 
-//    when (signUpState) {
-//        is Response.Success -> {
-//            if (signUpState.data != null) {
-//                Log.d("xd",signUpState.data.toString())
-//                LaunchedEffect(key1 = true) {
-//                    //viewModel.saveUserId(signUpState.data.userInfo.id)
-//                    viewModel.saveToken(signUpState.data.token)
-//                    navController.popBackStack()
-//                    navController.navigate(Graph.HOME.route)
-//                }
-//            }
-//        }
-//        else -> {
-//
-//        }
-//    }
     if (signUpState is Response.Success) {
         LaunchedEffect(key1 = Unit) {
             viewModel.saveToken(signUpState.data.token)

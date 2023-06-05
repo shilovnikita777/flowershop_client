@@ -48,16 +48,7 @@ sealed class Graph(
     object CATALOG: Graph("catalog_graph")
     object PROFILE: Graph("profile_graph")
     object BAG: Graph("bag_graph")
-    object SCAFFOLD: Graph("scaffold_graph")
 }
-//object Graph {
-//    const val ROOT = "root_graph"
-//    const val AUTHENTICATION = "authentication_graph"
-//    const val HOME = "home_graph"
-//    const val MAIN = "main_graph"
-//    const val CATALOG = "catalog_graph"
-//    const val PROFILE = "profile_graph"
-//}
 
 sealed class RootNavRoute(
     val route : String

@@ -17,9 +17,12 @@ import javax.inject.Inject
 class TestProductsRepositoryImpl @Inject constructor(
     private val data: TestData
 ): ProductsRepository {
-//    override fun getProductById(productId: Int, type: String): Flow<Response<Product>> {
+    //    override fun getProductById(productId: Int, type: String): Flow<Response<Product>> {
 //        TODO("Not yet implemented")
 //    }
+    override fun getSorts(): Flow<Response<List<Sort>>> {
+        TODO("Not yet implemented")
+    }
 
     override fun getPopularProducts(): Flow<Response<List<Product>>> = flow {
         emit(Response.Loading)

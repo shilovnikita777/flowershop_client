@@ -28,4 +28,6 @@ interface ProductsRepository {
     fun getFlowers(searchConditions: SearchConditions) : Flow<Response<List<Flower>>>
 
     fun getProducts(searchConditions: SearchConditions) : Flow<Response<List<Product>>>
+
+    fun getSorts() : Flow<Response<List<Sort>>>
 }

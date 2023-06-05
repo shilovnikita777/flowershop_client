@@ -26,7 +26,7 @@ fun Policy() {
         )
         Text(
             text = "1. Общие положения",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -35,12 +35,12 @@ fun Policy() {
             text = "Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных» (далее — Закон о персональных данных) и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Шиловым Никитой Андреевичем (далее — Оператор).\n" +
                     "1.1. Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.\n" +
                     "1.2. Настоящая политика Оператора в отношении обработки персональных данных (далее — Политика) применяется ко всей информации, которую Оператор может получить о посетителях мобильного приложения",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "2. Основные понятия, используемые в Политике",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -60,12 +60,12 @@ fun Policy() {
                     "2.12. Распространение персональных данных — любые действия, направленные на раскрытие персональных данных неопределенному кругу лиц (передача персональных данных) или на ознакомление с персональными данными неограниченного круга лиц, в том числе обнародование персональных данных в средствах массовой информации, размещение в информационно-телекоммуникационных сетях или предоставление доступа к персональным данным каким-либо иным способом.\n" +
                     "2.13. Трансграничная передача персональных данных — передача персональных данных на территорию иностранного государства органу власти иностранного государства, иностранному физическому или иностранному юридическому лицу.\n" +
                     "2.14. Уничтожение персональных данных — любые действия, в результате которых персональные данные уничтожаются безвозвратно с невозможностью дальнейшего восстановления содержания персональных данных в информационной системе персональных данных и/или уничтожаются материальные носители персональных данных.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "3. Основные права и обязанности Оператора",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -84,12 +84,12 @@ fun Policy() {
                     "— принимать правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа к ним, уничтожения, изменения, блокирования, копирования, предоставления, распространения персональных данных, а также от иных неправомерных действий в отношении персональных данных;\n" +
                     "— прекратить передачу (распространение, предоставление, доступ) персональных данных, прекратить обработку и уничтожить персональные данные в порядке и случаях, предусмотренных Законом о персональных данных;\n" +
                     "— исполнять иные обязанности, предусмотренные Законом о персональных данных.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "4. Основные права и обязанности субъектов персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -106,12 +106,12 @@ fun Policy() {
                     "— предоставлять Оператору достоверные данные о себе;\n" +
                     "— сообщать Оператору об уточнении (обновлении, изменении) своих персональных данных.\n" +
                     "4.3. Лица, передавшие Оператору недостоверные сведения о себе, либо сведения о другом субъекте персональных данных без согласия последнего, несут ответственность в соответствии с законодательством РФ.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "5. Принципы обработки персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -124,24 +124,24 @@ fun Policy() {
                     "5.5. Содержание и объем обрабатываемых персональных данных соответствуют заявленным целям обработки. Не допускается избыточность обрабатываемых персональных данных по отношению к заявленным целям их обработки.\n" +
                     "5.6. При обработке персональных данных обеспечивается точность персональных данных, их достаточность, а в необходимых случаях и актуальность по отношению к целям обработки персональных данных. Оператор принимает необходимые меры и/или обеспечивает их принятие по удалению или уточнению неполных или неточных данных.\n" +
                     "5.7. Хранение персональных данных осуществляется в форме, позволяющей определить субъекта персональных данных, не дольше, чем этого требуют цели обработки персональных данных, если срок хранения персональных данных не установлен федеральным законом, договором, стороной которого, выгодоприобретателем или поручителем по которому является субъект персональных данных. Обрабатываемые персональные данные уничтожаются либо обезличиваются по достижении целей обработки или в случае утраты необходимости в достижении этих целей, если иное не предусмотрено федеральным законом.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "6. Цели обработки персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
         )
         Text(
             text = "Предоставление доступа Пользователю к сервисам, информации и/или материалам, содержащимся в мобильном приложении.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "7. Условия обработки персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -154,12 +154,12 @@ fun Policy() {
                     "7.5. Обработка персональных данных необходима для осуществления прав и законных интересов оператора или третьих лиц либо для достижения общественно значимых целей при условии, что при этом не нарушаются права и свободы субъекта персональных данных.\n" +
                     "7.6. Осуществляется обработка персональных данных, доступ неограниченного круга лиц к которым предоставлен субъектом персональных данных либо по его просьбе (далее — общедоступные персональные данные).\n" +
                     "7.7. Осуществляется обработка персональных данных, подлежащих опубликованию или обязательному раскрытию в соответствии с федеральным законом.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "8. Порядок сбора, хранения, передачи и других видов обработки персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -175,12 +175,12 @@ fun Policy() {
                     "8.7. Оператор при обработке персональных данных обеспечивает конфиденциальность персональных данных.\n" +
                     "8.8. Оператор осуществляет хранение персональных данных в форме, позволяющей определить субъекта персональных данных, не дольше, чем этого требуют цели обработки персональных данных, если срок хранения персональных данных не установлен федеральным законом, договором, стороной которого, выгодоприобретателем или поручителем по которому является субъект персональных данных.\n" +
                     "8.9. Условием прекращения обработки персональных данных может являться достижение целей обработки персональных данных, истечение срока действия согласия субъекта персональных данных, отзыв согласия субъектом персональных данных или требование о прекращении обработки персональных данных, а также выявление неправомерной обработки персональных данных.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "9. Перечень действий, производимых Оператором с полученными персональными данными",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -188,12 +188,12 @@ fun Policy() {
         Text(
             text = "9.1. Оператор осуществляет сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление и уничтожение персональных данных.\n" +
                     "9.2. Оператор осуществляет автоматизированную обработку персональных данных с получением и/или передачей полученной информации по информационно-телекоммуникационным сетям или без таковой.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "10. Трансграничная передача персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -201,24 +201,24 @@ fun Policy() {
         Text(
             text = "10.1. Оператор до начала осуществления деятельности по трансграничной передаче персональных данных обязан уведомить уполномоченный орган по защите прав субъектов персональных данных о своем намерении осуществлять трансграничную передачу персональных данных (такое уведомление направляется отдельно от уведомления о намерении осуществлять обработку персональных данных).\n" +
                     "10.2. Оператор до подачи вышеуказанного уведомления, обязан получить от органов власти иностранного государства, иностранных физических лиц, иностранных юридических лиц, которым планируется трансграничная передача персональных данных, соответствующие сведения.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "11. Конфиденциальность персональных данных",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
         )
         Text(
             text = "Оператор и иные лица, получившие доступ к персональным данным, обязаны не раскрывать третьим лицам и не распространять персональные данные без согласия субъекта персональных данных, если иное не предусмотрено федеральным законом.",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
         Text(
             text = "12. Заключительные положения",
-            style = MaterialTheme.typography.h3.copy(fontSize = 14.sp),
+            style = MaterialTheme.typography.h3.copy(fontSize = 16.sp),
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .padding(top = 16.dp,bottom = 8.dp)
@@ -227,7 +227,7 @@ fun Policy() {
             text = "12.1. Пользователь может получить любые разъяснения по интересующим вопросам, касающимся обработки его персональных данных, обратившись к Оператору с помощью электронной почты shilovnikita129@gmail.com.\n" +
                     "12.2. В данном документе будут отражены любые изменения политики обработки персональных данных Оператором. Политика действует бессрочно до замены ее новой версией.\n" +
                     "12.3. Актуальная версия Политики в свободном доступе расположена в мобильном приложении в разделе \"Профиль\"",
-            style = MaterialTheme.typography.subtitle1.copy(fontSize = 12.sp),
+            style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
             color = MaterialTheme.colors.onBackground
         )
     }
